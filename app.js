@@ -3,7 +3,10 @@ var app = express();
 var router = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+
 var passport = require('passport');
+require('./passport')(passport);
+
 var flash    = require('connect-flash');
 var session      = require('express-session');
 
