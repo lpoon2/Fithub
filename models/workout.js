@@ -9,6 +9,13 @@ var workoutSchema   = new mongoose.Schema({
   comments : String,
   keywords: [String], // array of tags that pertain to the workout
   elements : [String], //array of element_ids and fields(ie weight, reps, sets, etc
+  day : {
+    Mon : [String],
+    Tue : [String],
+    Wed : [String],
+    Thu : [String],
+    Fri : [String]
+  }
 });
 
 module.exports = mongoose.model('Workout', workoutSchema);
