@@ -9,8 +9,9 @@ var eleSchema   = new mongoose.Schema({
   repetitions: int,
   sets: int,
   // if this a cardio lift (ie running, biking, swimming)
-  duration: int,
-  pace: int
+  // example for running-> duration: 4 miles, pace 9 min/mile
+  duration: String,
+  pace: String
 });
 
 module.exports = mongoose.model('Element', eleSchema);
