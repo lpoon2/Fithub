@@ -17,6 +17,7 @@ body{
 .menu{
 	font-weight: 400;
 	font-family: $Raleway !important;
+	border-style: none !important;
 	.item{
 		color: $primary-green !important;
 
@@ -56,6 +57,30 @@ body{
 }
 
 #secondBanner{
-	height: 500px;
-	
+	h4{
+		padding-top: 30px;
+		font-size: 48px;
+		font-weight: 700;
+	}
+	p{
+		font-size: 24px;
+		font-weight: 100;
+		line-height: 30px;
+	}
+
+	text-align:center;
+	height: 400px;
+	background-image : url(../assets/banner2.png);
+	background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
+
+#thirdBanner{
+	height: 400px;
+}
+
+.footer{
+	height: 200px;
+	background-color: $primary-green;
 }
