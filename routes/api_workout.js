@@ -24,6 +24,11 @@ router.post('/workout',function(req,res){
   ele.comments = req.body.comments;
   ele.keywords = req.body.keywords;
   ele.elements = req.body.elements;
+  ele.day.Mon = req.body.day.Mon;
+  ele.day.Tue = req.body.day.Tue;
+  ele.day.Wed = req.body.day.Wed;
+  ele.day.Thu = req.body.day.Thu;
+  ele.day.Fri = req.body.day.Fri;
   ele.save(function(err, obj){
     if(err){
       res.status(500);
