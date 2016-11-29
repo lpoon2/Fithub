@@ -1,3 +1,61 @@
-.segment{
-	color: green;
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700');
+
+body{
+	font-family: $Raleway;
+}
+
+//navbar 
+.branding{
+	background-color: $primary-green;
+	width: 10%;
+	text-align: center;
+	font-size: 48px;
+	color: white;
+	font-weight: 700;
+}
+
+.menu{
+	font-weight: 400;
+	font-family: $Raleway !important;
+	.item{
+		color: $primary-green !important;
+
+		.button{
+			background-color: $primary-green;
+			color: white;
+		}
+	}
+}
+
+//homepage
+#firstBanner{
+	height: 500px;
+	@include fixed-background();
+	background-image : url(../assets/banner1.jpg);
+	position: relative;
+
+	#headerText{
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  text-align: center
+	}
+
+	h2{
+	  	color: white;
+	  	font-weight: 700;
+	  	font-size: 144px;
+	}
+
+	h4{
+		color: white;
+	  	font-weight: 400;
+	  	font-size: 36px;
+	}
+}
+
+#secondBanner{
+	height: 500px;
+	
 }
