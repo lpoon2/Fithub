@@ -3,7 +3,7 @@ var passport = require('passport');
 
 
 module.exports = function(router) {
-  router.get('/users', function(req,res){
+  router.get('/users/login', function(req,res){
   User.find(function(err, obj){
     if(err){
       res.send(err);
