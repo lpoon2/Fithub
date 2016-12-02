@@ -26,6 +26,18 @@ work.find(function(err, obj){
                     });
 });
 
+router.get('/workout/:current_user', isLoggedIn, function(req,res){
+work.find({current_user: req.user.name}function(err, obj){
+  if(err){
+    res.send(err);
+  }
+  else{
+    res.json(obj);
+  }
+                    });
+});
+
+
 router.post('/workout',function(req,res){
   var ele = new work();
   ele.name = req.body.name;
@@ -53,4 +65,15 @@ router.post('/workout',function(req,res){
   });
 });
 return router;
+}
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+// if user is authenticated in the session, carry on
+if (req.isAuthenticated()){
+
+    return next();
+}
+// if they aren't redirect them to the home page
+res.redirect('/');
 }

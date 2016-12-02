@@ -4,6 +4,10 @@ body{
 	font-family: $Raleway;
 }
 
+#ng-container{
+	margin-top: 60px;
+}
+
 //navbar 
 .branding{
 	background-color: $primary-green;
@@ -22,7 +26,7 @@ body{
 		color: $primary-green !important;
 
 		.button{
-			background-color: $primary-green;
+			background-color: $secondary-green;
 			color: white;
 		}
 	}
@@ -71,7 +75,7 @@ body{
 
 	.button{
 		margin-top: $normal-margin;
-		background-color: $primary-green;
+		background-color: $secondary-green;
 		color: white;
 	}
 
@@ -99,12 +103,99 @@ body{
 
 	.button{
 		margin-top: $normal-margin;
-		background-color: $primary-green;
+		background-color: $secondary-green;
 		color: white;
 	}
+}
+
+//workout page
+#workoutInfo{
+	.workoutName{
+		font-size: 30px;
+		font-weight: 400;
+		padding-left: $small-margin;
+	}
+
+	.workoutCreator{
+		margin-top: $small-margin;
+		color: grey;
+		font-size: 20px;
+		font-weight: 400;
+		padding-left: $small-margin;
+	}
+
+	.button{
+		background-color: $secondary-green;
+		color: white;
+		width: 90%;
+	}
+	margin-top: $big-margin;
 }
 
 .footer{
 	height: 200px;
 	background-color: $primary-green;
+}
+
+.summaryContainer{
+	padding: 5px;
+	.dayContainer{
+		padding: 0 !important;
+		height: 300px;
+		background-color: grey;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+		.dayHeader{
+			background-color: $secondary-green;
+			text-align: center;
+			font-size: 18px;
+			color: white;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+
+		.workoutElement{
+			background-color: white;
+			padding-top: $small-margin;
+			padding-bottom: $small-margin;
+			text-align: center;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
+
+		.emptyDay{
+			text-align: center;
+			height: 272px;
+			background-color: $light-grey;
+		}
+	}
+}
+
+.dayRow{
+	background-color: $third-green;
+}
+
+.verticaltext{
+	transform: rotate(90deg);
+	transform-origin: top 20;
+	float: right;
+	margin-top: 100px;
+	font-size: 30px;
+	color: white;
+}
+
+.commentSection{
+	margin-bottom: $big-margin !important;
+	.inputField{
+	}
+
+	.comment{
+		.commentHeader{
+			color: white;
+			background-color: $third-green;
+			height: 7px !important;
+		}
+		.commentBody{
+			
+		}
+	}
 }

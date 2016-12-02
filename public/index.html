@@ -27,7 +27,7 @@
 		  	</div>
 		  </div>
 		</div>
-		<div ng-view></div>
+		<div id="ng-container" ng-view></div>
 		<div class="footer">
 			
 		</div>
@@ -35,5 +35,14 @@
 		<script src="semantic/semantic.min.js"></script>
 		<script src="./js/script.js"></script>
 		<script src="http://localhost:35729/livereload.js"></script>
+		<script>
+			$(document).ready(function(){
+				console.log('hello');
+			    $('.menu .item').tab({history:false});
+			});
+			$('.button').click(function(){
+				console.log('clicked');
+			})		
+		</script>
 	</body>
 </html>
