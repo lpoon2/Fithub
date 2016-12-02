@@ -6,6 +6,10 @@ app.config(function ($routeProvider) {
         templateUrl : "partials/home.html",
         controller : "homeControl"
     })
+    .when("/workout", {
+    	templateUrl	: "partials/workout.html",
+    	controller : "workoutControl"
+    })
     .otherwise({
     	redirectTo: '/home'
     })
