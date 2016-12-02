@@ -1,8 +1,24 @@
 var fithubControllers = angular.module('fithubControllers', []);
 
-fithubControllers.controller('homeControl', ['$scope', function($scope) {
-  $scope.data = "";
-   $scope.displayText = "";
+fithubControllers.controller('homeControl', ['$scope','Fit', function($scope,Fit) {
+
+}]);
+
+fithubControllers.controller('signupLoginControl', ['$scope','Fit', function($scope,Fit) {
+
+   $scope.signup = function(){
+      Fit.signup()
+      .success(function(user){
+        console.log('Thanks for registering!');
+      });
+   }
+   $scope.login = function(){
+         Fit.signup()
+         .success(function(user){
+           console.log('Welcome back!');
+         });
+      }
+
 }]);
 
 fithubControllers.controller('workoutControl', ['$scope', function($scope) {

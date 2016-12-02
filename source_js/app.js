@@ -1,4 +1,4 @@
-var app = angular.module('fithub',['ngRoute', 'fithubControllers']);
+var app = angular.module('fithub',['ngRoute', 'fithubControllers','fitServices']);
 
 app.config(function ($routeProvider) {
 	$routeProvider

@@ -11,7 +11,7 @@ module.exports = function(router) {
 		res.end();
 	});
 
-	// post call 
+	// post call
 	usersRoute.post(function(req, res){
 		console.log("In post function");
 		console.log("The req body is: " + req.body);
@@ -47,15 +47,15 @@ module.exports = function(router) {
 						newUser.save()
 							.then(function(result){
 								res.status(201);
-								res.json({ 
-									message: 'The user has been added', 
+								res.json({
+									message: 'The user has been added',
 									data: newUser
 								});
 							})
 							.catch(function(err){
 								res.status(500);
-								res.send({ 
-									message: 'The user failed to be added', 
+								res.send({
+									message: 'The user failed to be added',
 									data: []
 								});
 							})
@@ -71,20 +71,20 @@ module.exports = function(router) {
 	usersRoute.get(function(req,res){
 		console.log("In get request");
 		// I just added the same JSON encoded query string as MP4
-		// I forgot how Arjun said to do it but this is how I did my MP4 and makes sense to me so 
+		// I forgot how Arjun said to do it but this is how I did my MP4 and makes sense to me so
 		// Ill keep it for now
 		var countQuery = req.query.count;
-		
+
 		var whereQuery = req.query.where;
 		if (whereQuery != undefined)
 			whereQuery = eval("("+whereQuery+")");
-		
+
 		var sortQuery = req.query.sort;
-		if (sortQuery != undefined) 
+		if (sortQuery != undefined)
 			sortQuery = eval("("+sortQuery+")");
 
 		var selectQuery = req.query.select;
-		if (selectQuery != undefined) 
+		if (selectQuery != undefined)
 			selectQuery = eval("("+selectQuery+")");
 
 		var limitQuery = req.query.limit;
@@ -122,7 +122,7 @@ module.exports = function(router) {
 						data: result.length
 					});
 				}
-				else{ 
+				else{
 					console.log("send back the result ");
 					res.json({
 						message: "Got the users",
@@ -133,4 +133,15 @@ module.exports = function(router) {
 		});
 	});
 	return router;
+}
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+// if user is authenticated in the session, carry on
+if (req.isAuthenticated()){
+
+    return next();
+}
+// if they aren't redirect them to the home page
+res.redirect('/');
 }

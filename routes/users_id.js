@@ -35,10 +35,10 @@ module.exports = function(router) {
 	// put call
 	userIDsRoute.put(function(req, res) {
 	User.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true}, function(err, response) {
-		if (err) { 
+		if (err) {
 			res.status(500);
 			res.send({
-				message: "Unable to update user", 
+				message: "Unable to update user",
 				data: []
 			});
 		}
@@ -47,15 +47,15 @@ module.exports = function(router) {
 				console.log("got bad response");
 				res.status(404);
 				res.send({
-					message: "User not found", 
+					message: "User not found",
 					data: []
 				});
 			}
-			else { 
+			else {
 				console.log("all clear");
 				res.status(200);
 				res.json({
-					message: "User has been updated", 
+					message: "User has been updated",
 					data: response
 				});
 			}
@@ -66,25 +66,25 @@ module.exports = function(router) {
 	// delete call Careful
 	userIDsRoute.delete(function(req, res) {
 		User.findByIdAndRemove(req.params.id, function(err, response) {
-			if (err) { 
+			if (err) {
 				res.status(500);
 				res.send({
-					message: "Unable to remove the user", 
+					message: "Unable to remove the user",
 					data: []
 				});
 			}
-			else { 
+			else {
 				if (response == null || response == undefined) {
 					res.status(404);
 					res.send({
-						message: "Unable to find the user to delete", 
+						message: "Unable to find the user to delete",
 						data: []
 					});
 				}
-				else { 
+				else {
 					res.status(200);
 					res.json({
-						message: "User has been deleted", 
+						message: "User has been deleted",
 						data: response
 					});
 				}
@@ -92,4 +92,15 @@ module.exports = function(router) {
 		});
 	});
 	return router;
+}
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+// if user is authenticated in the session, carry on
+if (req.isAuthenticated()){
+
+    return next();
+}
+// if they aren't redirect them to the home page
+res.redirect('/');
 }
