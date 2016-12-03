@@ -1,5 +1,6 @@
 var User       = require('./models/user');
 var LocalStrategy   = require('passport-local').Strategy;
+var auth = require('passport-local-authenticate');
 
 module.exports = function(passport) {
 /**   serializer  & deserializer
@@ -43,14 +44,14 @@ module.exports = function(passport) {
 
              // check to see if theres already a user with that email
              if (user) {
-                 return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                 return done(null, false);
              } else {
 
                var newUser = new User();
                newUser.name = req.body.name;
                newUser.email   = email;
                newUser.Hash_password = newUser.generateHash(password);
-               new
+               //newUser.Hash_password  = auth.hash(password);
                newUser.save(function(err) {
                        if (err)
                            throw err;
@@ -61,26 +62,27 @@ module.exports = function(passport) {
        });
      }));
 
+//passport.use('local-login', new LocalStrategy(
 
-
-passport.use('local-login', new LocalStrategy({
-
-usernameField: 'email',
-passwordField: 'Hash_password',
-passReqToCallback : true
-
-}, function(req, email, password, done) {
-
-User.findOne({ 'Hash_password': email }, function (err, user) {
-
+passport.use('local', new LocalStrategy(
+  {
+         usernameField : 'email',
+         passwordField : 'Hash_password',
+         passReqToCallback : true // allows us to pass back the entire request to the callback
+  },
+ function(req,email, password, done) {
+   User.findOne({ 'email': email }, function (err, user) {
   if (err) { return done(err); }
   if (!user) {
       return done(null, false);
   }
-  if (!user.verifyPassword(password)) { return done(null, false); }
+
+  if( !user.validPassword(password)) { return done(null, false); }
+  //if (!user.verifyPassword(password)) { return done(null, false); }
   return done(null, user);
 });
 }
+
 ));
 
 };
