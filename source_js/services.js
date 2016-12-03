@@ -25,12 +25,7 @@ fitServices.factory("Users", function($http, $window){
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/users/" + userID);
 		}
-		add: function(userName, userEmail, userPassword){
-			data = {
-				name: name,
-				email: userEmail,
-				password: userPassword
-			}
+		add: function(data){
 			return $http.post(baseUrl+'/users', data);
 		}
 		delete: function(userID) {
@@ -88,31 +83,11 @@ fitServices.factory("Workouts", function($http, $window){
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/workout/" + workoutID);
 		}
-		add: function(workoutName, workoutDesc, workoutOriginUser, workoutCurrUser, workoutPrivate){
-			data = {
-				name: workoutName,
-				description : workoutDesc,
-				original_user : workoutOriginUser,
-				current_user : workoutCurrUser,
-				private: workoutPrivate
-			}
+		add: function(data){
 			return $http.post(baseUrl+'/workout', data);
 		}
 		// TODO Update FIX THIS
-		update: function(ID, workoutName, workoutDesc, workoutOriginUser, workoutCurrUser, workoutPrivate, numFav, numCopy, workoutRating, comments, days, keywords){
-			data = {
-				name: workoutName,
-				description : workoutDesc,
-				original_user : workoutOriginUser,
-				current_user : workoutCurrUser,
-				private: workoutPrivate,
-				num_favorite : numFav,
-  				num_copy : numCopy,
-  				rating : workoutRating,
-  				comments: comments,
-  				keywords: keywords,
-  				days: days
-			}
+		update: function(data){
 			return $http.put(baseUrl+'/workout/' + id, data);		
 		}
 		delete: function(workoutID) {
