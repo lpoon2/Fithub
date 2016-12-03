@@ -4,19 +4,29 @@ fithubControllers.controller('homeControl', ['$scope','Fit', function($scope,Fit
 
 }]);
 
-fithubControllers.controller('signupLoginControl', ['$scope','Fit', function($scope,Fit) {
+fithubControllers.controller('signupLoginControl', ['$scope', '$window','Fit', 'Users',function($scope,$window, Fit,Users) {
 
    $scope.signup = function(){
       Fit.signup()
-      .success(function(user){
+      .success(function(){
         console.log('Thanks for registering!');
-      });
+		var param = 'where=' + $scope.user_email;
+		Users.customGet(param).success(function(data){
+			$window.sessionStorage.user_id = data[0].data._id;
+			$location.path('/explore');
+		});
+	  });
    }
    $scope.login = function(){
          Fit.signup()
-         .success(function(user){
-           console.log('Welcome back!');
-         });
+			 .success(function(){
+				 console.log('Login successfully!');
+				 var param = 'where=' + $scope.user_email;
+				 Users.customGet(param).success(function(data){
+					 $window.sessionStorage.user_id = data[0].data._id;
+					 $location.path('/explore');
+				 });
+			 });
       }
 
 }]);
