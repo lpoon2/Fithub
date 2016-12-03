@@ -87,8 +87,8 @@ fitServices.factory("Workouts", function($http){
 			return $http.post(baseURl+'/workout', data);
 		},
 		// TODO Update FIX THIS
-		update: function(data){
-			return $http.put(baseURl+'/workout/' + id, data);
+		update: function(workoutid, data){
+			return $http.put(baseURl+'/workout/' + workoutid, data);
 		},
 		delete: function(workoutID) {
 			//var sessionID = $window.sessionStorage 
