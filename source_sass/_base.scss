@@ -161,12 +161,25 @@ body{
 			padding-bottom: $small-margin;
 			text-align: center;
 			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			height: 60px;
 
-			.deleteElement{
-				float: left;
-				width: 30%;
-				color: red;
+			.controls{
+				width: 100%;
+				padding-top: $small-margin;
+				height: 10px;
+				.deleteElement{
+					float: left;
+					width: 50%;
+					color: red;
+				}
+
+				.expandElement{
+					float: right;
+					width: 50%;
+					color: $primary-green;
+				}
 			}
+			
 		}
 
 		.emptyDay{
@@ -307,5 +320,21 @@ body{
 			}
 			box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.1);
 		}
+	}
+}
+
+.tagButton{
+	background-color: $third-green !important;
+	font-family: $Raleway !important;
+	margin-top: $small-margin !important;
+}
+
+.tagButton .active{
+	background-color: $primary-green !important;
+}
+
+#addedElementModal{
+	.header{
+		color: $primary-green;
 	}
 }

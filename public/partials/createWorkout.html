@@ -26,7 +26,7 @@
 		<div class="stepInput">
 			<div class="ui form">
 				<div class="field">
-				    <textarea rows="3" placeholder="Workout Description"></textarea>
+				    <textarea my-enter="scrollToTarget('#step3')" rows="3" placeholder="Workout Description"></textarea>
 				</div>
 			</div>
 		</div>
@@ -40,14 +40,14 @@
 		</div>
 		<div class="stepInput">
 			<div class="ui radio checkbox">
-			  <input type="radio" name="radio" checked="checked">
+			  <input ng-click="scrollToTarget('#step4')" type="radio" name="radio" checked="checked">
 			  <label>
 			  		<i class="users icon"></i> Public
 			  </label>
 			</div>
 			<br>
 			<div class="ui radio checkbox">
-			  <input type="radio" name="radio" checked="checked">
+			  <input ng-click="scrollToTarget('#step4')" type="radio" name="radio" checked="checked">
 			  <label>
 			  		<i class="lock icon"></i> Private
 			  </label>
@@ -57,7 +57,7 @@
 	<div class="ui centered twelve wide column break">
 		<hr>
 	</div>
-	<div class="ui centered fourteen wide column step">
+	<div id="step4" class="ui centered fourteen wide column step">
 		<div class="description">
 			<strong>Step 4 - </strong> Find and add elements to your workout!
 		</div>
@@ -70,7 +70,7 @@
 				</div>
 				<div class="ui segment resultElements">
 					<div ng-repeat="element in elements" class="ui stackable two column grid element">
-						<div class="column elementName">
+						<div ng-click="setPeekElement(element)" class="column elementName">
 							{{element}}
 						</div>
 						<div class="column dayContainer">
@@ -98,10 +98,15 @@
 						</div>
 					</div>
 					<div ng-repeat="element in day.elements" class="workoutElement">
-						<div ng-click="removeFromWorkout(element.index, day.day)" class="deleteElement">
-							<i class="trash outline icon"></i>
-						</div>
 						{{element.element}}
+						<div class="controls">
+							<div ng-click="removeFromWorkout(element.index, day.day)" class="deleteElement">
+								<i class="trash outline icon"></i>
+							</div>
+							<div ng-click="setActiveElement(element)" class="expandElement">
+								<i class="plus icon"></i>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -110,7 +115,71 @@
 	<div class="ui centered twelve wide column break">
 		<hr>
 	</div>
-	<div class="ui centered fifteen wide column">
-		
+	<div id="step5" class="ui centered fifteen wide column step">
+		<div class="description">
+			<strong>Step 5 - </strong> Almost done! Help other users out by selecting a few tags to describe your workout. 
+		</div>
+		<div class="stepInput">
+			<div ng-repeat="tag in tags" ng-click="toggleTag(tag)" ng-class="getTagClass(tag)" class="ui button tagButton">{{tag}}</div>
+		</div>
 	</div>
+</div>
+
+<div id="addedElementModal" class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+  	{{activeElement.element}}
+  </div>
+  <div class="image content">
+    <div class="ui medium image">
+      <img src="assets/liftingPlaceholder.jpg">
+    </div>
+    <div class="description">
+      <div class="ui header">{{activeElement.element}}</div>
+      <p>A placeholder for the description of the element.</p>
+      <div class="ui labeled input">
+        <div class="ui label">
+          Sets
+        </div>
+        <input type="text" ng-model="activeElement.sets">
+      </div>
+      <br>
+      <div class="ui labeled input">
+        <div class="ui label">
+          Reps
+        </div>
+        <input type="text" ng-model="activeElement.reps">
+      </div>
+      <br>
+      <div class="ui labeled input">
+        <div class="ui label">
+          Time
+        </div>
+        <input type="text" ng-model="activeElement.time">
+      </div>
+      <br>
+      <div class="ui labeled input">
+        <div class="ui label">
+          Distance
+        </div>
+        <input type="text" ng-model="activeElement.distance">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="elementModal" class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+  	{{peekElement}}
+  </div>
+  <div class="image content">
+    <div class="ui medium image">
+      <img src="assets/liftingPlaceholder.jpg">
+    </div>
+    <div class="description">
+      <div class="ui header">{{peekElement}}</div>
+      <p>A placeholder for the description of the element.</p>
+    </div>
+  </div>
 </div>

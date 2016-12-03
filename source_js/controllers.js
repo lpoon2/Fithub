@@ -22,8 +22,12 @@ fithubControllers.controller('signupLoginControl', ['$scope','Fit', function($sc
 }]);
 
 fithubControllers.controller('createWorkoutControl', ['$scope', function($scope) {
-	$scope.elements= ['Bench Press', 'Biking', 'Dumbbell Flies', 
+	$scope.elements = ['Bench Press', 'Biking', 'Dumbbell Flies', 
 						'Leg Extensions', 'Tennis', 'Basketball', 'Bicep Curls', 'Maltese Flies'];
+
+	$scope.tags = ['Lifting', 'Cardio', 'Sports', 'Chest', 'Legs', 'Back', 'Arms', 'Endurance', 
+	'Strength', 'Outdoors', 'Indoors', 'Bodyweight'];
+
 	$scope.workout = {
 		name: '3-Day Chest Workout',
 		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
@@ -31,6 +35,7 @@ fithubControllers.controller('createWorkoutControl', ['$scope', function($scope)
 		current_user: 'OnlyChestDay',
 		rating: 32,
 		copies: 12,
+		tags: [],
 		comments: [
 			{
 				user: 'John Smith',
@@ -125,9 +130,41 @@ fithubControllers.controller('createWorkoutControl', ['$scope', function($scope)
 		$.scrollTo($(target));
 	}
 
+	$scope.setActiveElement = function(element){
+		$scope.activeElement = element;
+		$('#addedElementModal')
+		  .modal('show')
+		;
+	}
+
+	$scope.setPeekElement = function(element){
+		$scope.peekElement = element;
+		$('#elementModal')
+		  .modal('show')
+		;
+	}
+
+	$scope.toggleTag = function(tag){
+		var tagIndex = $scope.workout.tags.indexOf(tag);
+		if ( tagIndex != -1){
+			$scope.workout.tags.push(tag);
+		}else{
+			$scope.workout.tags.splice(tagIndex,1);
+		}
+	}
+
+	$scope.getTagClass = function(tag){
+		if ($scope.workout.tags.indexOf(tag) != -1){
+			return 'ui button tagButton'
+		}else{
+			return 'ui button tagButton active'
+		}
+	}
+
 	$.extend($.scrollTo.defaults, {
 	  axis: 'y',
-	  duration: 800
+	  duration: 800,
+	  offset: -54
 	});	
 }]);
 
