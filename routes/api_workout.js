@@ -16,7 +16,15 @@ module.exports = function(router) {
   }
 
 router.get('/workout', function(req,res){
-work.find(function(err, obj){
+  var selectObject = {};
+  var queryObject = {};
+  if (req.query.where){
+    queryObject = JSON.parse(req.query.where);
+  }
+  if (req.query.select){
+    selectObject = JSON.parse(req.query.select);
+  }
+  work.find(queryObject, selectObject, function(err, obj){
   if(err){
     res.send(err);
   }
@@ -45,6 +53,8 @@ router.post('/workout',function(req,res){
   ele.original_user = req.body.original_user;//!!!!!!!!!!!!!!!!!!!!!*original user need to be changed to null if created or previous user
   ele.current_user = req.body.current_user;//current user need to be changed in front end
   //ele.rating = req.body.rating;
+  ele.current_user_id = req.body.current_user_id;
+  ele.original_user_id = req.body.original_user_id;
   ele.comments = req.body.comments;
   ele.keywords = req.body.keywords;
   //ele.elements = req.body.elements;

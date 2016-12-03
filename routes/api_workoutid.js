@@ -53,6 +53,8 @@ module.exports = function(router) {
             ele.rating = req.body.rating;
             ele.comments = req.body.comments;
             ele.keywords = req.body.keywords;
+            ele.current_user_id = req.body.current_user_id;
+            ele.original_user_id = req.body.original_user_id;
             //ele.elements = req.body.elements;
             ele.days = req.body.days;//is this enough to make a deep copy ?
 

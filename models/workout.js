@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var elemDetail = new mongoose.Schema({
+  name:{type: String, required:true},
   elementid: String,
   reps: Number,
   sets: Number,
@@ -15,6 +16,7 @@ var workoutSchema   = new mongoose.Schema({
   original_user : String,
   original_workout_id : String,
   current_user : String,
+  current_user_id :String,
   rating : Number,
   private: Boolean,
   dateCreated: {

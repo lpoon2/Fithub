@@ -169,7 +169,11 @@ fithubControllers.controller('createWorkoutControl', ['$scope', function($scope)
 	});	
 }]);
 
-fithubControllers.controller('workoutControl', ['$scope', function($scope) {
+fithubControllers.controller('workoutControl', ['$scope', "Workouts",function($scope, Workouts) {
+	$scope.workoutid = $routeParams.id;
+	/*Workouts.getOne($scope.workoutid).success(function(data){
+		$scope.workout = data.data;
+	});*/
 	$scope.workout = {
 		name: '3-Day chest Workout',
 		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
@@ -361,6 +365,23 @@ fithubControllers.controller('workoutControl', ['$scope', function($scope) {
         	return 'item';
         }
     }
+
+    $scope.copy = function(){
+    	$scope.workout.num_copy ++;
+		Workouts.update($scope.workoutid, $scope.workout);
+		var newWorkout = $scope.workout;
+		newWorkout._id = undefined;
+		newWorkout.comments = [];
+		newWorkout.dateCreated = undefined;
+		newWorkout.original_user = $scope.workout.current_user;
+		newWorkout.original_user_id = $scope.workout.current_user_id;
+		newWorkout.current_user = "hahaha";
+		newWorkout.current_user_id = 1234;
+		Workouts.add(newWorkout).success(function(data){
+			$location.path('/workout/edit'+ data.data._id);
+		});
+
+	}
 }]);
 
 fithubControllers.controller('userProfileControl', ['$scope', function($scope) {
