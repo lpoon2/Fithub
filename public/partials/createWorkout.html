@@ -1,0 +1,116 @@
+<div class="createWorkoutBanner">
+	<div id="headerText">
+		<h2>NEW WORKOUT</h2>
+	</div>
+</div>
+<div class="ui grid createGrid">
+	<div id="step1" class="ui centered fourteen wide column step">
+		<div class="description">
+			<strong>Step 1 - </strong> Give your workout a name
+		</div>
+		<div class="stepInput">
+			<div class="ui form">
+				<div class="field">
+				    <textarea my-enter="scrollToTarget('#step2')" rows="3" placeholder="Workout Name"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui centered twelve wide column break">
+		<hr>
+	</div>
+	<div id="step2" class="ui centered fourteen wide column step">
+		<div class="description">
+			<strong>Step 2 - </strong> Give a short description for your workout.
+		</div>
+		<div class="stepInput">
+			<div class="ui form">
+				<div class="field">
+				    <textarea rows="3" placeholder="Workout Description"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui centered twelve wide column break">
+		<hr>
+	</div>
+	<div id="step3" class="ui centered fourteen wide column step">
+		<div class="description">
+			<strong>Step 3 - </strong> Choose to make your workout private or public.
+		</div>
+		<div class="stepInput">
+			<div class="ui radio checkbox">
+			  <input type="radio" name="radio" checked="checked">
+			  <label>
+			  		<i class="users icon"></i> Public
+			  </label>
+			</div>
+			<br>
+			<div class="ui radio checkbox">
+			  <input type="radio" name="radio" checked="checked">
+			  <label>
+			  		<i class="lock icon"></i> Private
+			  </label>
+			</div>
+		</div>
+	</div>
+	<div class="ui centered twelve wide column break">
+		<hr>
+	</div>
+	<div class="ui centered fourteen wide column step">
+		<div class="description">
+			<strong>Step 4 - </strong> Find and add elements to your workout!
+		</div>
+		<div class="stepInput">
+			<div class="ui segments elementSearch">
+				<div class="ui segment searchElements">
+					<div class="ui transparent input">
+					  <input type="text" placeholder="Search...">
+					</div>
+				</div>
+				<div class="ui segment resultElements">
+					<div ng-repeat="element in elements" class="ui stackable two column grid element">
+						<div class="column elementName">
+							{{element}}
+						</div>
+						<div class="column dayContainer">
+							<div ng-click="addToWorkout(element,'Sunday')" class="selectionDay">S</div>
+							<div ng-click="addToWorkout(element,'Monday')" class="selectionDay">M</div>
+							<div ng-click="addToWorkout(element,'Tuesday')" class="selectionDay">T</div>
+							<div ng-click="addToWorkout(element,'Wednesday')" class="selectionDay">W</div>
+							<div ng-click="addToWorkout(element,'Thursday')" class="selectionDay">T</div>
+							<div ng-click="addToWorkout(element,'Friday')" class="selectionDay">F</div>
+							<div ng-click="addToWorkout(element,'Saturday')" class="selectionDay">S</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui centered fifteen wide column">
+		<div id="summaryView">
+			<div class="ui stackable seven column grid summaryContainer">
+				<div ng-repeat="day in workout.days" class="dayContainer column">
+					<div class="dayHeader">{{day.day}}</div>
+					<div ng-show="day.elements.length == 0" class="emptyDay">
+						<div class="verticaltext">
+							No Activity
+						</div>
+					</div>
+					<div ng-repeat="element in day.elements" class="workoutElement">
+						<div ng-click="removeFromWorkout(element.index, day.day)" class="deleteElement">
+							<i class="trash outline icon"></i>
+						</div>
+						{{element.element}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui centered twelve wide column break">
+		<hr>
+	</div>
+	<div class="ui centered fifteen wide column">
+		
+	</div>
+</div>
