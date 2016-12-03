@@ -1,20 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @apmenon2
- Unwatch 4
-  Star 0
-  Fork 0 lpoon2/Fithub Private
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathFithub/source_js/services.js
-94e87de  4 minutes ago
- xcchangxc@163.com service
-1 contributor
-RawBlameHistory     
-101 lines (93 sloc)  2.49 KB
 var fitServices=angular.module("fitServices",[]);
 // TODO Change this
 var baseURL = "http://localhost:3000/api";
@@ -116,5 +99,3 @@ fitServices.factory("Workouts", function($http){
 		}
 	}
 });
-Contact GitHub API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Status Help
