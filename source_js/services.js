@@ -15,23 +15,23 @@ fitServices.factory("Fit",function($http){
 
 
 // Users 
-fitServices.factory("Users", function($http, $window){
+fitServices.factory("Users", function($http){
 	return{
 		get: function() {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/users");
-		}
+		},
 		getOne: function(userID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/users/" + userID);
-		}
+		},
 		add: function(data){
-			return $http.post(baseUrl+'/users', data);
-		}
+			return $http.post(baseURl+'/users', data);
+		},
 		delete: function(userID) {
 			//var sessionID = $window.sessionStorage.id 
 			return $http.delete(baseURL + "/users/" + userID);
-		}
+		},
 		customGet: function(parameters){
 			return $http.get(baseURL + "/users?" + parameters);
 		}
@@ -41,16 +41,16 @@ fitServices.factory("Users", function($http, $window){
 
 
 // Elements
-fitServices.factory("Elements", function($http, $window){
+fitServices.factory("Elements", function($http){
 	return{
 		get: function() {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/elements");
-		}
+		},
 		getOne: function(elementID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/elements/" + elementID);
-		}
+		},
 		add: function(elementName, elementDesc, elementType, elementMedia, elementKeywords){
 			data = {
 				name: elementName,
@@ -59,12 +59,12 @@ fitServices.factory("Elements", function($http, $window){
 				media: elementMedia,
 				keywords: elementKeywords
 			}
-			return $http.post(baseUrl+'/elements', data);
-		}
+			return $http.post(baseURl+'/elements', data);
+		},
 		delete: function(elementID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.delete(baseURL + "/elements/" + elementID);
-		}
+		},
 		customGet: function(parameters){
 			return $http.get(baseURL + "/elements?" + parameters);
 		}
@@ -73,27 +73,27 @@ fitServices.factory("Elements", function($http, $window){
 
 
 // GET all workouts
-fitServices.factory("Workouts", function($http, $window){
+fitServices.factory("Workouts", function($http){
 	return{
 		get: function() {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/workout");
-		}
+		},
 		getOne: function(workoutID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/workout/" + workoutID);
-		}
+		},
 		add: function(data){
-			return $http.post(baseUrl+'/workout', data);
-		}
+			return $http.post(baseURl+'/workout', data);
+		},
 		// TODO Update FIX THIS
 		update: function(data){
-			return $http.put(baseUrl+'/workout/' + id, data);		
-		}
+			return $http.put(baseURl+'/workout/' + id, data);
+		},
 		delete: function(workoutID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.delete(baseURL + "/workout/" + workoutID);
-		}
+		},
 		customGet: function(parameters){
 			return $http.get(baseURL + "/workout?" + parameters);
 		}
