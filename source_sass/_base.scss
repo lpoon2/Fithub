@@ -424,3 +424,20 @@ body{
 }
 
 
+// Login Page
+
+.loginBox{
+	margin-bottom: $giant-margin !important;
+}
+
+.loginIntro{
+	text-align: center;
+	font-weight: 700;
+	font-size: 36px;
+	color: $primary-green;
+}
+
+.loginButton{
+	background-color: $primary-green !important;
+	color: white !important;
+}
