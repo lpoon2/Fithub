@@ -17,6 +17,10 @@ var workoutSchema   = new mongoose.Schema({
   current_user : String,
   rating : Number,
   private: Boolean,
+  dateCreated: {
+    type: Date,
+    default: Date.now
+  },
   comments : [
     {
       user: String,
