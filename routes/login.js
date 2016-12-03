@@ -6,15 +6,15 @@ module.exports = function(router) {
   router.post('/signup', passport.authenticate('local-signup', {
 
     //TODO: redirect user in case of log in failure/success
-      successRedirect : '/home', // redirect to the secure profile section
-      failureRedirect : '/', // redirect back to the signup page if there is an error
+      successRedirect : '/good', // redirect to the secure profile section
+      failureRedirect : '/bad', // redirect back to the signup page if there is an error
       failureFlash : true // allow flash messages
   }));
 
   //TODO: redirect user in case of log in failure/success
-  router.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/home', // redirect to the secure profile section
-    failureRedirect : '/', // redirect back to the signup page if there is an error
+  router.post('/login', passport.authenticate('local', {
+    successRedirect : '/good', // redirect to the secure profile section
+    failureRedirect : '/bad', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
 }));
 

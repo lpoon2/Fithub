@@ -52,7 +52,7 @@ router.post('/elements',function(req,res){
   ele.description = req.body.description;
   ele.type = req.body.type;
   ele.media = req.body.media;
-  ele.keywords = req.body.keywords;
+  //ele.keywords = req.body.keywords;
   ele.save(function(err, obj){
     if(err){
       res.status(500);
