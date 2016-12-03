@@ -1,0 +1,46 @@
+<div class="ui stackable grid profileContainer">
+	<div class="ui centered four wide column">
+		<img class="ui medium image" src="assets/avatarPlaceholder.png">
+		<div class="userName">Henry Ford</div>
+	</div>
+	<div class="ui centered eleven wide column">
+		<div class="ui top attached tabular menu">
+		  <a class="active item" data-tab="all">All Workouts</a>
+		  <a class="item" data-tab="original">Original Workouts</a>
+		  <a class="item" data-tab="copied">Copied Workouts</a>
+		</div>
+		<div class="ui bottom attached active tab segment" data-tab="all">
+			<div class="ui stackable two column grid">
+				<div ng-repeat="workout in workouts" class="column">
+					<div class="ui segments workoutCard">
+						<div class="ui segment cardHeader">
+							{{workout.name}}
+							<div class="headerInfo">
+								<i class="star icon"></i> {{workout.favCount}}
+							</div>
+							<div class="headerInfo">
+								<i class="copy icon"></i> {{workout.copyCount}}
+							</div>
+						</div>
+						<div class="ui segment cardBody">
+							<div class="cardDescription">
+								{{workout.description}}
+							</div>
+						</div>
+						<div class="ui segment cardFooter">
+							<div ng-repeat="tag in workout.tags" class="ui label cardTag">
+							  <i class="tag icon"></i> {{tag}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ui bottom attached tab segment" data-tab="original">
+		  Second
+		</div>
+		<div class="ui bottom attached tab segment" data-tab="copied">
+		  Third
+		</div>
+	</div>
+</div>

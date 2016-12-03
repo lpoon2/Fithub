@@ -338,3 +338,38 @@ body{
 		color: $primary-green;
 	}
 }
+
+
+//User Profile View
+
+.profileContainer{
+	margin-top: $big-margin !important;
+	.userName{
+		font-size: 36px;
+		font-weight: 700;
+		text-align: center;
+		color: $primary-green;
+		margin-top: $normal-margin;
+	}
+	.workoutCard{
+
+		.cardHeader{
+			color: white;
+			background-color: $secondary-green;
+			.headerInfo{
+				float: right;
+				margin-left: $small-margin;
+			}
+		}
+
+		.cardDescription{
+		}
+
+		.cardFooter{
+			.cardTag{
+				background-color: $third-green;
+				color:white;
+			}
+		}
+	}
+}

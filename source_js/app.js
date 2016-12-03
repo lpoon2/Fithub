@@ -14,6 +14,10 @@ app.config(function ($routeProvider) {
         templateUrl : "partials/createWorkout.html",
         controller : "createWorkoutControl"
     })
+    .when("/profile", {
+        templateUrl : "partials/profile.html",
+        controller : "userProfileControl"
+    })
     .otherwise({
         redirectTo: '/home'
     })

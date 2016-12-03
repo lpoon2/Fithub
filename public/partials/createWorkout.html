@@ -120,7 +120,7 @@
 			<strong>Step 5 - </strong> Almost done! Help other users out by selecting a few tags to describe your workout. 
 		</div>
 		<div class="stepInput">
-			<div ng-repeat="tag in tags" ng-click="toggleTag(tag)" ng-class="getTagClass(tag)" class="ui button tagButton">{{tag}}</div>
+			<div ng-repeat="tag in tags" ng-click="toggleTag(tag)" ng-class="'ui button tagButton active': workout.tags.indexOf(tag)!=-1" class="ui button tagButton">{{tag}}</div>
 		</div>
 	</div>
 </div>

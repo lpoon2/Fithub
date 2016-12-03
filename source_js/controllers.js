@@ -361,3 +361,48 @@ fithubControllers.controller('workoutControl', ['$scope', function($scope) {
         }
     }
 }]);
+
+fithubControllers.controller('userProfileControl', ['$scope', function($scope) {
+	$('.menu .item')
+	  .tab()
+	;
+
+	$scope.workouts = [
+		{
+			name: 'Workout 1',
+			description: 'A random workout description',
+			favCount: 32,
+			copyCount: 12,
+			tags: ['Lifting', 'Chest']
+		},
+		{
+			name: 'Workout 2',
+			description: 'A chest only workout. Optimized for 3 days a week',
+			favCount: 32,
+			copyCount: 12,
+			tags: ['Lifting', 'Chest']
+		},
+		{
+			name: 'Workout 3',
+			description: 'Cardio intensive workout. Heavy focus on swimming and full body.',
+			favCount: 32,
+			copyCount: 12,
+			tags: ['Lifting', 'Chest']
+		},
+		{
+			name: 'Workout 4',
+			description: 'A random workout description',
+			favCount: 32,
+			copyCount: 12,
+			tags: ['Lifting', 'Chest']
+		},
+		{
+			name: 'Workout 5',
+			description: 'A random workout description',
+			favCount: 32,
+			copyCount: 12,
+			tags: ['Lifting', 'Chest']
+		},
+	];
+
+}]);
