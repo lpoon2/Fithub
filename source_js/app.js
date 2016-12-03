@@ -18,6 +18,10 @@ app.config(function ($routeProvider) {
         templateUrl : "partials/profile.html",
         controller : "userProfileControl"
     })
+    .when("/explore", {
+        templateUrl : "partials/explore.html",
+        controller : "exploreControl"
+    })
     .otherwise({
         redirectTo: '/home'
     })
