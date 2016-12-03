@@ -13,7 +13,7 @@ Ele.find(function(err, obj){
                     });
 });
 
-router.delete('/users/:_id', function(req, res){
+router.delete('/elements/:_id', function(req, res){
   Ele.remove({_id : req.params._id}, function(err,obj){
     if(err){
       res.send(err);
@@ -24,7 +24,7 @@ router.delete('/users/:_id', function(req, res){
   });
 });
 
-router.put('/elements/:id', function(req, res){
+router.put('/elements/:_id', function(req, res){
   Ele.findByIdAndUpdate(
   req.params._id, req.body,
   function(err,obj){
@@ -42,7 +42,7 @@ router.post('/elements',function(req,res){
   ele.description = req.body.description;
   ele.type = req.body.type;
   ele.media = req.body.media;
-  ele.keywords = req.body.keywords;
+  //ele.keywords = req.body.keywords;
   ele.save(function(err, obj){
     if(err){
       res.status(500);

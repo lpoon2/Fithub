@@ -26,7 +26,7 @@ work.find(function(err, obj){
                     });
 });
 
-router.get('/workout/:current_user', isLoggedIn, function(req,res){
+/*router.get('/workout/:current_user', isLoggedIn, function(req,res){
 work.find({current_user: req.user.name},function(err, obj){
   if(err){
     res.send(err);
@@ -35,7 +35,7 @@ work.find({current_user: req.user.name},function(err, obj){
     res.json(obj);
   }
                     });
-});
+});*/
 
 
 router.post('/workout',function(req,res){

@@ -38,7 +38,7 @@ var port = process.env.PORT || 3000;
 
 mongoose.connect("mongodb://fithub:cs498fa2016@ds161487.mlab.com:61487/fithub");
 
-//require('./routes')(app, router);
+require('./routes')(app, router);
 
 console.log("Express server running on " + port);
 app.listen(port);

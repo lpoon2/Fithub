@@ -70,13 +70,13 @@ module.exports = function(router) {
                 }
                 else{
                     res.status(201);
-                    res.json({ message: 'workout created!'});
+                    res.json({ message: 'workout updated!'});
                 }
             });
         });
     });
 
-    router.get('/workout/:id', function(req,res){
+    router.delete('/workout/:id', function(req,res){
         workout.findByIdAndRemove(req.params.id, function(error, result){
             if (error){
                 res.status(500);
