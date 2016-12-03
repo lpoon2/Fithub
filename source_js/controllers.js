@@ -21,6 +21,116 @@ fithubControllers.controller('signupLoginControl', ['$scope','Fit', function($sc
 
 }]);
 
+fithubControllers.controller('createWorkoutControl', ['$scope', function($scope) {
+	$scope.elements= ['Bench Press', 'Biking', 'Dumbbell Flies', 
+						'Leg Extensions', 'Tennis', 'Basketball', 'Bicep Curls', 'Maltese Flies'];
+	$scope.workout = {
+		name: '3-Day Chest Workout',
+		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
+		original_user: 'OnlyChestDay',
+		current_user: 'OnlyChestDay',
+		rating: 32,
+		copies: 12,
+		comments: [
+			{
+				user: 'John Smith',
+				body: 'This is a great workout! I will be starting it ASAP.'
+			},
+			{
+				user: 'Harry Potter',
+				body: 'Really good workout. I suggest possibly swapping biking for a second day of swimming on Thursday as it is more involved for the chest.'
+			},
+			{
+				user: 'Thomas Brethauer',
+				body: 'Looks like a great workout, but everyone knows only leg day counts!'
+			},
+		],
+		days : [
+			{
+				day: 'Sunday',
+				currIndex: 0,
+				elements: [
+				]
+			},
+			{
+				day: 'Monday',
+				currIndex: 0,
+				elements: [
+				]
+			},
+			{
+				day: 'Tuesday',
+				currIndex: 0,
+				elements: [
+				]
+			},
+			{
+				day: 'Wednesday',
+				currIndex: 0,
+				elements: [
+				]
+			},
+			{
+				day: 'Thursday',
+				currIndex: 0,
+				elements: [
+				]
+			},
+			{
+				day: 'Friday',
+				currIndex: 0,
+				elements: [
+
+				]
+			},
+			{
+				day: 'Saturday',
+				currIndex: 0,
+				elements: [
+				]
+			},
+		]
+	};
+
+	$scope.addToWorkout = function(element, targetDay){
+		elementToAdd = {};
+		elementToAdd.element = element;
+		elementToAdd.sets = '';
+		elementToAdd.reps = '';
+		elementToAdd.time = '';
+		elementToAdd.distance = '';
+		for(var i = 0; i<$scope.workout.days.length; i++){
+			if($scope.workout.days[i].day == targetDay){
+				elementToAdd.index = $scope.workout.days[i].currIndex;
+				$scope.workout.days[i].elements.push(elementToAdd);
+				$scope.workout.days[i].currIndex++;
+			}
+		}
+	};
+
+	$scope.removeFromWorkout = function(elementIndex, targetDay){
+		for(var i = 0; i<$scope.workout.days.length; i++){
+			if($scope.workout.days[i].day == targetDay){
+				for(var j = 0; j < $scope.workout.days[i].elements.length; j++){
+					if($scope.workout.days[i].elements[j].index == elementIndex){
+						$scope.workout.days[i].elements.splice(j, 1);
+					}
+				}
+			}
+		}
+	}
+
+	$scope.scrollToTarget = function(target){
+		console.log(target);
+		$.scrollTo($(target));
+	}
+
+	$.extend($.scrollTo.defaults, {
+	  axis: 'y',
+	  duration: 800
+	});	
+}]);
+
 fithubControllers.controller('workoutControl', ['$scope', function($scope) {
 	$scope.workout = {
 		name: '3-Day Chest Workout',
