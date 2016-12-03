@@ -11,61 +11,7 @@ module.exports = function(router) {
 		res.end();
 	});
 
-	// post call
-	usersRoute.post(function(req, res){
-		console.log("In post function");
-		console.log("The req body is: " + req.body);
-		var newUser = new User({
-			name: req.body.name,
-			email: req.body.email,
-			//how is the password added?
-		});
-		User.find(
-			{
-				"email":req.body.email
-			}, function(err, response){
-				console.log("In find");
-				if (err){
-					res.status(500);
-					res.send({
-						message: "User could not be added",
-						data: []
-					});
-				}
-				else{
-					console.log("Check if email exists already");
-					if (response.length > 0){
-						console.log("email is already in db");
-						res.status(500);
-						res.send({
-							message: "Email has already been used",
-							data: []
-						});
-					}
-					else{
-						console.log("Adding the user since the email is unique");
-						newUser.save()
-							.then(function(result){
-								res.status(201);
-								res.json({
-									message: 'The user has been added',
-									data: newUser
-								});
-							})
-							.catch(function(err){
-								res.status(500);
-								res.send({
-									message: 'The user failed to be added',
-									data: []
-								});
-							})
-						}
-					}
-				}
-		);
-	});
-
-
+	
 // get request
 
 	usersRoute.get(function(req,res){
