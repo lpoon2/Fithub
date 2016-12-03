@@ -25,14 +25,14 @@ fithubControllers.controller('createWorkoutControl', ['$scope', function($scope)
 	$scope.elements = ['Bench Press', 'Biking', 'Dumbbell Flies', 
 						'Leg Extensions', 'Tennis', 'Basketball', 'Bicep Curls', 'Maltese Flies'];
 
-	$scope.tags = ['Lifting', 'Cardio', 'Sports', 'Chest', 'Legs', 'Back', 'Arms', 'Endurance', 
+	$scope.tags = ['lifting', 'Cardio', 'Sports', 'chest', 'Legs', 'Back', 'Arms', 'Endurance', 
 	'Strength', 'Outdoors', 'Indoors', 'Bodyweight'];
 
 	$scope.workout = {
-		name: '3-Day Chest Workout',
+		name: '3-Day chest Workout',
 		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
-		original_user: 'OnlyChestDay',
-		current_user: 'OnlyChestDay',
+		original_user: 'OnlychestDay',
+		current_user: 'OnlychestDay',
 		rating: 32,
 		copies: 12,
 		tags: [],
@@ -146,11 +146,12 @@ fithubControllers.controller('createWorkoutControl', ['$scope', function($scope)
 
 	$scope.toggleTag = function(tag){
 		var tagIndex = $scope.workout.tags.indexOf(tag);
-		if ( tagIndex != -1){
+		if ( tagIndex == -1){
 			$scope.workout.tags.push(tag);
 		}else{
 			$scope.workout.tags.splice(tagIndex,1);
 		}
+		console.log($scope.workout.tags);
 	}
 
 	$scope.getTagClass = function(tag){
@@ -170,10 +171,10 @@ fithubControllers.controller('createWorkoutControl', ['$scope', function($scope)
 
 fithubControllers.controller('workoutControl', ['$scope', function($scope) {
 	$scope.workout = {
-		name: '3-Day Chest Workout',
+		name: '3-Day chest Workout',
 		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
-		original_user: 'OnlyChestDay',
-		current_user: 'OnlyChestDay',
+		original_user: 'OnlychestDay',
+		current_user: 'OnlychestDay',
 		rating: 32,
 		copies: 12,
 		comments: [
@@ -373,36 +374,102 @@ fithubControllers.controller('userProfileControl', ['$scope', function($scope) {
 			description: 'A random workout description',
 			favCount: 32,
 			copyCount: 12,
-			tags: ['Lifting', 'Chest']
+			tags: ['lifting', 'chest']
 		},
 		{
 			name: 'Workout 2',
 			description: 'A chest only workout. Optimized for 3 days a week',
 			favCount: 32,
 			copyCount: 12,
-			tags: ['Lifting', 'Chest']
+			tags: ['lifting', 'chest']
 		},
 		{
 			name: 'Workout 3',
 			description: 'Cardio intensive workout. Heavy focus on swimming and full body.',
 			favCount: 32,
 			copyCount: 12,
-			tags: ['Lifting', 'Chest']
+			tags: ['lifting', 'chest']
 		},
 		{
 			name: 'Workout 4',
 			description: 'A random workout description',
 			favCount: 32,
 			copyCount: 12,
-			tags: ['Lifting', 'Chest']
+			tags: ['lifting', 'chest']
 		},
 		{
 			name: 'Workout 5',
 			description: 'A random workout description',
 			favCount: 32,
 			copyCount: 12,
-			tags: ['Lifting', 'Chest']
+			tags: ['lifting', 'chest']
 		},
 	];
+
+}]);
+
+fithubControllers.controller('exploreControl', ['$scope', function($scope) {
+	$scope.sortParameter = 'favCount';
+	$scope.workouts = [
+		{
+			name: 'Workout 1',
+			current_user: 'Marlon',
+			description: 'A random workout description',
+			favCount: 32,
+			copyCount: 12,
+			tags: ['lifting', 'chest']
+		},
+		{
+			name: 'Workout 2',
+			current_user: 'Bobby',
+			description: 'A chest only workout. Optimized for 3 days a week',
+			favCount: 29,
+			copyCount: 12,
+			tags: ['lifting', 'legs']
+		},
+		{
+			name: 'Workout 3',
+			current_user: 'Jacob',
+			description: 'Cardio intensive workout. Heavy focus on swimming and full body.',
+			favCount: 1,
+			copyCount: 12,
+			tags: ['lifting', 'chest']
+		},
+		{
+			name: 'Workout 4',
+			current_user: 'Chandler',
+			description: 'A random workout description',
+			favCount: 4,
+			copyCount: 12,
+			tags: ['lifting', 'legs']
+		},
+		{
+			name: 'Workout 5',
+			current_user: 'Andreas',
+			description: 'A random workout description',
+			favCount: 20,
+			copyCount: 12,
+			tags: ['lifting', 'chest']
+		},
+	];
+
+	$scope.filterQuery = function(workout){
+		if($scope.query == "" || $scope.query == undefined){
+			return true;
+		}
+		if(workout.name.toLowerCase().includes($scope.query.toLowerCase())){
+			return true;
+		}
+		if(workout.current_user.toLowerCase().includes($scope.query.toLowerCase())){
+			return true;
+		}
+		if(workout.tags.indexOf($scope.query.toLowerCase()) != -1){
+			return true;
+		}
+	};
+
+	$scope.toggleSort = function(sort){
+		$scope.sortParameter = sort;
+	}
 
 }]);

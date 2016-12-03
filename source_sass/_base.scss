@@ -225,7 +225,7 @@ body{
 .createWorkoutBanner{
 	height: 300px;
 	@include fixed-background();
-	background-image : url(../assets/banner1.jpg);
+	background-image : url(../assets/createBanner.jpg);
 	position: relative;
 
 	#headerText{
@@ -237,7 +237,7 @@ body{
 	}
 
 	h2{
-	  	color: white;
+	  	color: black;
 	  	font-weight: 700;
 	  	font-size: 100px;
 	}
@@ -329,7 +329,7 @@ body{
 	margin-top: $small-margin !important;
 }
 
-.tagButton .active{
+.activeTag{
 	background-color: $primary-green !important;
 }
 
@@ -351,25 +351,76 @@ body{
 		color: $primary-green;
 		margin-top: $normal-margin;
 	}
-	.workoutCard{
+}
 
-		.cardHeader{
-			color: white;
-			background-color: $secondary-green;
-			.headerInfo{
-				float: right;
-				margin-left: $small-margin;
-			}
+.workoutCard{
+
+	.cardHeader{
+		color: $primary-green;
+		background-color: $third-green;
+		font-size: 14px !important;
+		font-weight: 400;
+		.headerInfo{
+			float: right;
+			margin-left: $small-margin;
 		}
+	}
 
-		.cardDescription{
-		}
+	.cardDescription{
+	}
 
-		.cardFooter{
-			.cardTag{
-				background-color: $third-green;
-				color:white;
-			}
+	.cardFooter{
+		.cardTag{
+			background-color: $third-green;
+			color:white;
 		}
 	}
 }
+
+
+//Explore View
+
+.exploreBanner{
+	height: 300px;
+	@include fixed-background();
+	background-image : url(../assets/exploreBanner2.jpg);
+	position: relative;
+
+	#headerText{
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  text-align: center
+	}
+
+	h2{
+	  	color: white;
+	  	font-weight: 700;
+	  	font-size: 100px;
+	}
+}
+
+.exploreSearch{
+	.topicButton{
+		background-color: $third-green !important;
+		color: white !important;
+	}
+
+	.activeSort{
+		background-color: $secondary-green !important;
+	}
+}
+
+.exploreBody{
+	margin-bottom: $normal-margin;
+	
+	.exploreResults{
+	}
+
+	.resultUser{
+		color: white;
+	}
+}
+
+

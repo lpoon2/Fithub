@@ -1,0 +1,50 @@
+<div class="ui stackable grid">
+	<div class="row exploreBanner">
+		<div id="headerText" class="ui centered ten wide column">
+			<h2>EXPLORE WORKOUTS</h2>	
+		</div>
+	</div>
+	<div class="row exploreSearch">
+		<div class="ten wide centered column">
+			<div class="ui fluid icon input">
+			  <input type="text" placeholder="Begin exploring..." ng-model="query">
+			  <i class="search icon"></i>
+			</div>
+		</div>
+		<div class="four wide centered column">
+			<div class="ui buttons">
+				<button ng-click="toggleSort('favCount')" ng-class="{'ui button topicButton activeSort' : sortParameter == 'favCount', 'ui button topicButton': sortParameter != 'favCount'}" class="ui button topicButton"><i class="trophy icon"></i>Popular</button>
+				<div class="or"></div>
+				<button ng-click="toggleSort('dateCreated')" ng-class="{'ui button topicButton activeSort' : sortParameter == 'dateCreated', 'ui button topicButton': sortParameter != 'dateCreate'}" class="ui button topicButton" ><i class="newspaper icon"></i>New</button>
+			</div>
+		</div>
+	</div>
+	<div class="row exploreBody">
+		<div class="fifteen wide centered column">
+			<div class="ui stackable three column grid exploreResults">
+				<div ng-repeat="workout in workouts | filter: filterQuery | orderBy:sortParameter:1" class="column">
+					<div class="ui segments workoutCard">
+						<div class="ui segment cardHeader">
+							{{workout.name}} - <span class="resultUser">{{workout.current_user}}</span>
+							<div class="headerInfo">
+								<i class="star icon"></i> {{workout.favCount}}
+							</div>
+							<div class="headerInfo">
+								<i class="copy icon"></i> {{workout.copyCount}}
+							</div>
+						</div>
+						<div class="ui segment cardBody">
+							<div class="cardDescription">
+								{{workout.description}}
+							</div>
+						</div>
+						<div class="ui segment cardFooter">
+							<div ng-repeat="tag in workout.tags" class="ui label cardTag">
+							  <i class="tag icon"></i> {{tag}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

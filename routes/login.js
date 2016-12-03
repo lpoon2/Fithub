@@ -3,16 +3,6 @@ var passport = require('passport');
 
 
 module.exports = function(router) {
-  router.get('/users', function(req,res){
-  User.find(function(err, obj){
-    if(err){
-      res.send(err);
-    }
-    else{
-      res.json(obj);
-    }
-                      });
-  });
   router.post('/signup', passport.authenticate('local-signup', {
 
     //TODO: redirect user in case of log in failure/success

@@ -14,82 +14,43 @@ fitServices.factory("Fit",function($http){
 });
 
 
-// GET all users 
-fitServices.factory("getAllUsers", function($http, $window){
+// Users 
+fitServices.factory("Users", function($http, $window){
 	return{
 		get: function() {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/users");
 		}
-	}
-});
-
-
-// GET Specific User
-fitServices.factory("getOneUser", function($http, $window){
-	return{
-		get: function(userID) {
+		getOne: function(userID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/users/" + userID);
 		}
-	}
-});
-
-
-// TODO CREATE a User 
-// Larry 
-fitServices.factory("addUser", function($http, $window){
-	return{
-		add: function(userName, userEmail, userPassword){
-			data = {
-				name: name,
-				email: userEmail,
-				password: userPassword
-			}
+		add: function(data){
 			return $http.post(baseUrl+'/users', data);
 		}
-	}
-});
-
-
-// TODO DELETE a user
-fitServices.factory("deleteUser", function($http, $window){
-	return{
 		delete: function(userID) {
 			//var sessionID = $window.sessionStorage.id 
 			return $http.delete(baseURL + "/users/" + userID);
 		}
+		customGet: function(parameters){
+			return $http.get(baseURL + "/users?" + parameters);
+		}
+
 	}
 });
 
 
-// GET all elements
-fitServices.factory("getAllElements", function($http, $window){
+// Elements
+fitServices.factory("Elements", function($http, $window){
 	return{
 		get: function() {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/elements");
 		}
-	}
-});
-
-
-// GET Specific element
-fitServices.factory("getOneElement", function($http, $window){
-	return{
-		get: function(elementID) {
+		getOne: function(elementID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/elements/" + elementID);
 		}
-	}
-});
-
-
-// TODO CREATE a lift 
-// FOR DEVELOPER USE ONLY 
-// Delete before going into Production
-fitServices.factory("addElement", function($http, $window){
-	return{
 		add: function(elementName, elementDesc, elementType, elementMedia, elementKeywords){
 			data = {
 				name: elementName,
@@ -100,65 +61,41 @@ fitServices.factory("addElement", function($http, $window){
 			}
 			return $http.post(baseUrl+'/elements', data);
 		}
-	}
-});
-
-// TODO DELETE an element
-fitServices.factory("deleteElement", function($http, $window){
-	return{
 		delete: function(elementID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.delete(baseURL + "/elements/" + elementID);
+		}
+		customGet: function(parameters){
+			return $http.get(baseURL + "/elements?" + parameters);
 		}
 	}
 });
 
 
 // GET all workouts
-fitServices.factory("getAllWorkouts", function($http, $window){
+fitServices.factory("Workouts", function($http, $window){
 	return{
 		get: function() {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/workout");
 		}
-	}
-});
-
-
-// GET Specific workout
-fitServices.factory("getOneWorkout", function($http, $window){
-	return{
-		get: function(workoutID) {
+		getOne: function(workoutID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.get(baseURL + "/workout/" + workoutID);
 		}
-	}
-});
-
-
-// TODO CREATE a workout
-// Unsure of how to post with the embedded document
-fitServices.factory("addWorkout", function($http, $window){
-	return{
-		add: function(workoutName, workoutDesc, workoutOriginUser, workoutCurrUser, workoutPrivate){
-			data = {
-				name: workoutName,
-				description : workoutDesc,
-				original_user : workoutOriginUser,
-				current_user : workoutCurrUser,
-				private: workoutPrivate
-			}
+		add: function(data){
 			return $http.post(baseUrl+'/workout', data);
 		}
-	}
-});
-
-// TODO DELETE a workout
-fitServices.factory("deleteWorkout", function($http, $window){
-	return{
+		// TODO Update FIX THIS
+		update: function(data){
+			return $http.put(baseUrl+'/workout/' + id, data);		
+		}
 		delete: function(workoutID) {
 			//var sessionID = $window.sessionStorage 
 			return $http.delete(baseURL + "/workout/" + workoutID);
+		}
+		customGet: function(parameters){
+			return $http.get(baseURL + "/workout?" + parameters);
 		}
 	}
 });
