@@ -142,6 +142,7 @@ body{
 	.dayContainer{
 		padding: 0 !important;
 		height: 300px;
+		overflow-y: scroll;
 		background-color: grey;
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
@@ -160,6 +161,12 @@ body{
 			padding-bottom: $small-margin;
 			text-align: center;
 			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+			.deleteElement{
+				float: left;
+				width: 30%;
+				color: red;
+			}
 		}
 
 		.emptyDay{
@@ -196,6 +203,109 @@ body{
 		}
 		.commentBody{
 			
+		}
+	}
+}
+
+//Create workout page
+
+.createWorkoutBanner{
+	height: 300px;
+	@include fixed-background();
+	background-image : url(../assets/banner1.jpg);
+	position: relative;
+
+	#headerText{
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  text-align: center
+	}
+
+	h2{
+	  	color: white;
+	  	font-weight: 700;
+	  	font-size: 100px;
+	}
+}
+
+.createGrid{
+	margin-top: $normal-margin;
+	margin-bottom: $normal-margin;
+}
+
+.step{
+	margin-top: $normal-margin;
+	margin-bottom: $normal-margin;
+	.description{
+		font-size: 36px;
+		font-weight: 100;
+		margin-bottom: $normal-margin;
+
+		strong{
+			font-size: 36px;
+			font-weight: 700;
+			color: $primary-green;
+		}
+	}
+	.stepInput{
+		.radio{
+			font-size: 30px;
+			font-weight: 100;
+			margin-top: $normal-margin;
+			i{
+				font-size: 50px;
+				color: $primary-green;
+			}
+		}
+	}
+}
+
+.break{
+	hr{
+		width: 100%;
+		border-color: $primary-green;
+		margin-bottom: $small-margin;
+		margin-top: $small-margin;
+	}
+}
+
+
+.elementSearch{
+	.searchElements{
+		border-color: $primary-green;
+		input{
+			color: white;
+			width: 100%;
+		}
+		@include placeholders();
+	}
+	.resultElements{
+		height: 200px;
+		overflow-y: scroll;
+
+		.element{
+			font-size: 24px;
+			color: $primary-green;
+			padding: 0;
+			.elementName{
+				padding: 5px;
+			}
+			.column.dayContainer{
+				padding: 0;
+			}
+			.selectionDay{
+				float: left;
+				height: 100%;
+				width: 14.28%;
+				background-color: $third-green;
+				color: white;
+				text-align: center;
+				padding: 0;
+				border: 1px solid $primary-green;
+			}
+			box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.1);
 		}
 	}
 }
