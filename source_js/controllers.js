@@ -473,3 +473,7 @@ fithubControllers.controller('exploreControl', ['$scope', function($scope) {
 	}
 
 }]);
+
+fithubControllers.controller('loginControl', ['$scope', function($scope) {
+
+}]);
