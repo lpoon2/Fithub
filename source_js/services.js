@@ -2,34 +2,34 @@ var fitServices=angular.module("fitServices",[]);
 // TODO Change this
 var baseURL = "http://localhost:3000/api";
 
-fitServices.factory("Fit",function($http){
+fitServices.factory("Fit",function($http,$window){
   return{
     signup : function(){
       return $http.post('/signup');
     },
     login : function(){
-      return $http.post('/login'); 
+      return $http.post('/login');
     }
   }
 });
 
 
-// Users 
+// Users
 fitServices.factory("Users", function($http){
 	return{
 		get: function() {
-			//var sessionID = $window.sessionStorage 
+			//var sessionID = $window.sessionStorage
 			return $http.get(baseURL + "/users");
 		},
 		getOne: function(userID) {
-			//var sessionID = $window.sessionStorage 
+			//var sessionID = $window.sessionStorage
 			return $http.get(baseURL + "/users/" + userID);
 		},
 		add: function(data){
 			return $http.post(baseURl+'/users', data);
 		},
 		delete: function(userID) {
-			//var sessionID = $window.sessionStorage.id 
+			//var sessionID = $window.sessionStorage.id
 			return $http.delete(baseURL + "/users/" + userID);
 		},
 		customGet: function(parameters){
@@ -44,11 +44,11 @@ fitServices.factory("Users", function($http){
 fitServices.factory("Elements", function($http){
 	return{
 		get: function() {
-			//var sessionID = $window.sessionStorage 
+			//var sessionID = $window.sessionStorage
 			return $http.get(baseURL + "/elements");
 		},
 		getOne: function(elementID) {
-			//var sessionID = $window.sessionStorage 
+			//var sessionID = $window.sessionStorage
 			return $http.get(baseURL + "/elements/" + elementID);
 		},
 		add: function(elementName, elementDesc, elementType, elementMedia, elementKeywords){
@@ -62,7 +62,7 @@ fitServices.factory("Elements", function($http){
 			return $http.post(baseURl+'/elements', data);
 		},
 		delete: function(elementID) {
-			//var sessionID = $window.sessionStorage 
+			//var sessionID = $window.sessionStorage
 			return $http.delete(baseURL + "/elements/" + elementID);
 		},
 		customGet: function(parameters){
@@ -76,11 +76,11 @@ fitServices.factory("Elements", function($http){
 fitServices.factory("Workouts", function($http){
 	return{
 		get: function() {
-			//var sessionID = $window.sessionStorage 
+			//var sessionID = $window.sessionStorage
 			return $http.get(baseURL + "/workout");
 		},
 		getOne: function(workoutID) {
-			//var sessionID = $window.sessionStorage 
+			//var sessionID = $window.sessionStorage
 			return $http.get(baseURL + "/workout/" + workoutID);
 		},
 		add: function(data){
@@ -91,7 +91,7 @@ fitServices.factory("Workouts", function($http){
 			return $http.put(baseURl+'/workout/' + id, data);
 		},
 		delete: function(workoutID) {
-			//var sessionID = $window.sessionStorage 
+			//var sessionID = $window.sessionStorage
 			return $http.delete(baseURL + "/workout/" + workoutID);
 		},
 		customGet: function(parameters){
