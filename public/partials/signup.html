@@ -14,7 +14,7 @@
 						<div class="ui form">
 							<div class="field">
 							    <label>Username</label>
-							    <input class="fluid input" type="email" name="name" placeholder="superbuff">
+							    <input ng-model="signUpObject.name" class="fluid input" type="text" name="name" placeholder="superbuff">
 							 </div>
 						</div>
 					</div>
@@ -22,7 +22,7 @@
 						<div class="ui form">
 							<div class="field">
 							    <label>Email</label>
-							    <input class="fluid input" type="email" name="email" placeholder="john@smith.com">
+							    <input ng-model="signUpObject.email" class="fluid input" type="email" name="email" placeholder="john@smith.com">
 							 </div>
 						</div>
 					</div>
@@ -30,7 +30,7 @@
 						<div class="ui form">
 							<div class="field">
 							    <label>Password</label>
-							    <input class="input" type="password" name="password">
+							    <input ng-model="signUpObject.Hash_password" class="input" type="password" name="password">
 							</div>
 						</div>
 					</div>
@@ -43,7 +43,7 @@
 						</div>
 					</div>
 					<div class="center aligned column">
-						<button class="ui button loginButton">
+						<button ng-click="signUp()" class="ui button loginButton">
 							Sign Up
 						</button>
 					</div>
