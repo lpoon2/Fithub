@@ -1,3 +1,25 @@
+<div class="ui top fixed menu">
+  <div class="branding">
+    Fh
+  </div>
+  <a class="item">Find</a>
+  <a class="item">Create</a>
+  <div class="right menu">
+  	<div ng-show="!checkLoggedIn()" class="item">
+  		<a href="#" class="small ui button">Sign Up</a>
+  	</div>
+  	<div ng-show="!checkLoggedIn()" class="item">
+  		<a href="#" class="small ui button">Login</a>
+  	</div>
+  	<div ng-show="checkLoggedIn()" class="item">
+  		<i class="user icon"></i> {{userName}}
+  	</div>
+  	<div ng-show="checkLoggedIn()" class="item">
+  		<button ng-click="logout()" class="small ui button">Logout</button>
+  	</div>
+  </div>
+</div>
+
 <div class="ui stackable grid loginPage">
 	<div class="row">
 		<div class="ui seven wide centered column">

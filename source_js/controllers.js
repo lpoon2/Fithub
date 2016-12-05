@@ -9,7 +9,13 @@ fithubControllers.controller('homeControl', ['$scope','$window','Fit', function(
 	console.log('Scope' + $scope.loggedIn);
 	console.log($scope.userName);
 	$scope.logout = function(){
-		Fit.logout;
+		Fit.logout();
+	}
+	$scope.checkLoggedIn = function(){
+		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
+		if ($window.sessionStorage.isLogedin == true)
+			return true
+		return false;
 	}
 
 }]);
@@ -21,6 +27,12 @@ fithubControllers.controller('signUpControl', ['$scope', '$window', '$location',
 	$scope.userName = $window.sessionStorage.user_name;
 	$scope.logout = function(){
 		Fit.logout();
+	}
+	$scope.checkLoggedIn = function(){
+		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
+		if ($window.sessionStorage.isLogedin == true)
+			return true
+		return false;
 	}
 
 	$scope.signUpObject = {};
@@ -46,6 +58,12 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', 'Workou
 	$scope.userName = $window.sessionStorage.user_name;
 	$scope.logout = function(){
 		Fit.logout();
+	}
+	$scope.checkLoggedIn = function(){
+		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
+		if ($window.sessionStorage.isLogedin == true)
+			return true
+		return false;
 	}
 
 	$scope.elements = ['Bench Press', 'Biking', 'Dumbbell Flies', 
@@ -204,6 +222,12 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', "Workouts",
 	$scope.userName = $window.sessionStorage.user_name;
 	$scope.logout = function(){
 		Fit.logout();
+	}
+	$scope.checkLoggedIn = function(){
+		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
+		if ($window.sessionStorage.isLogedin == true)
+			return true
+		return false;
 	}
 
 	$scope.workout = {
@@ -428,6 +452,12 @@ fithubControllers.controller('userProfileControl','Fit', ['$scope', function($sc
 	$scope.logout = function(){
 		Fit.logout();
 	}
+	$scope.checkLoggedIn = function(){
+		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
+		if ($window.sessionStorage.isLogedin == true)
+			return true
+		return false;
+	}
 	$('.menu .item')
 	  .tab()
 	;
@@ -479,6 +509,12 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 	$scope.userName = $window.sessionStorage.user_name;
 	$scope.logout = function(){
 		Fit.logout();
+	}
+	$scope.checkLoggedIn = function(){
+		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
+		if ($window.sessionStorage.isLogedin == true)
+			return true
+		return false;
 	}
 
 	$scope.sortParameter = 'favCount';
@@ -553,6 +589,12 @@ fithubControllers.controller('loginControl', ['$scope', '$window','$location','F
 	$scope.userName = $window.sessionStorage.user_name;
 	$scope.logout = function(){
 		Fit.logout();
+	}
+	$scope.checkLoggedIn = function(){
+		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
+		if ($window.sessionStorage.isLogedin == true)
+			return true
+		return false;
 	}
 
 	$scope.loginObject = {};
