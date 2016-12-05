@@ -9,7 +9,10 @@ fitServices.factory("Fit",function($http,$window){
     },
     login : function(){
       return $http.post('/login');
-    }
+    },
+    logout: function(){
+    	return $http.get('/logout');
+	}
   }
 });
 
