@@ -27,7 +27,7 @@ fithubControllers.controller('signupControl', ['$scope', '$window','Fit', 'Users
    }
 }]);
 
-fithubControllers.controller('createWorkoutControl', ['$scope', function($scope) {
+fithubControllers.controller('createWorkoutControl', ['$scope', '$http', 'Workouts', function($scope, $http, Workouts) {
 
 	$scope.elements = ['Bench Press', 'Biking', 'Dumbbell Flies', 
 						'Leg Extensions', 'Tennis', 'Basketball', 'Bicep Curls', 'Maltese Flies'];

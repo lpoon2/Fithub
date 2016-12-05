@@ -1,6 +1,6 @@
 var fitServices=angular.module("fitServices",[]);
 // TODO Change this
-var baseURL = "http://fa16-cs498rk-059.cs.illinois.edu:3000/api";
+var baseURL = "http://localhost:3000/api";
 
 fitServices.factory("Fit",function($http,$window){
   return{
@@ -87,11 +87,11 @@ fitServices.factory("Workouts", function($http){
 			return $http.get(baseURL + "/workout/" + workoutID);
 		},
 		add: function(data){
-			return $http.post(baseURl+'/workout', data);
+			return $http.post(baseURL+'/workout', data);
 		},
 		// TODO Update FIX THIS
 		update: function(workoutid, data){
-			return $http.put(baseURl+'/workout/' + workoutid, data);
+			return $http.put(baseURL+'/workout/' + workoutid, data);
 		},
 		delete: function(workoutID) {
 			//var sessionID = $window.sessionStorage
