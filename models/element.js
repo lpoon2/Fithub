@@ -5,7 +5,7 @@ var eleSchema   = new mongoose.Schema({
   description : String,
   type : String,
   media : String,  // the path to the media ?
-  //keywords: [String], // array of tags that pertain to the workout
+  keywords: [String], // array of tags that pertain to the workout
   //repetitions: Number,
   //sets: Number,
   // if this a cardio lift (ie running, biking, swimming)

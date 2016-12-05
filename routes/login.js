@@ -7,11 +7,17 @@ module.exports = function(router) {
     User.findOne({ 'email' :  req.body.email }, function(err, user) {
         // if there are any errors, return the error
         if (err)
-            return res.json(err);
+        return res.status(401).json({
+          err: err,
+          signup: false
+        });
 
         // check to see if theres already a user with that email
         if (user) {
-            return res.json({message: 'user alreay exist !'})
+          return res.status(401).json({
+            err: 'user already exist!',
+            signup: false
+          });
         } else {
 
           var newUser = new User();
@@ -22,7 +28,10 @@ module.exports = function(router) {
           newUser.save(function(err) {
                   if (err)
                       throw err;
-                  return res.json({message: 'sign up success!'});
+                      return res.status(401).json({
+                        err: 'user sign up success!',
+                        signup: true
+                      });
               });
         }
     });
@@ -36,7 +45,8 @@ module.exports = function(router) {
     }
     if (!user) {
       return res.status(401).json({
-        err: info
+        err: 'login failed!',
+        login: false
       });
     }
     req.logIn(  user, function(err) {
@@ -46,7 +56,8 @@ module.exports = function(router) {
         });
       }
       res.status(200).json({
-        status: 'Login successful!'
+        status: 'Login successful!',
+        login: true
       });
     });
   })(req, res, next);
