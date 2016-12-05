@@ -14,7 +14,11 @@ app.config(function ($routeProvider) {
         templateUrl : "partials/createWorkout.html",
         controller : "createWorkoutControl"
     })
-    .when("/profile", {
+    .when("/edit/:id", {
+        templateUrl : "partials/editWorkout.html",
+        controller : "editWorkoutControl"
+    })
+    .when("/profile/:id", {
         templateUrl : "partials/profile.html",
         controller : "userProfileControl"
     })
@@ -25,6 +29,10 @@ app.config(function ($routeProvider) {
     .when("/login", {
         templateUrl : "partials/login.html",
         controller : "loginControl"
+    })
+    .when("/signup", {
+        templateUrl : "partials/signup.html",
+        controller : "signUpControl"
     })
     .otherwise({
         redirectTo: '/home'
