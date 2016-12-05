@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 
 var elemDetail = new mongoose.Schema({
+  name:{type: String, required:true},
+  index: Number,
   elementid: String,
   reps: Number,
   sets: Number,
@@ -15,8 +17,9 @@ var workoutSchema   = new mongoose.Schema({
   original_user : String,
   original_workout_id : String,
   current_user : String,
+  current_user_id :String,
   rating : Number,
-  private: Boolean,
+  public: Boolean,
   dateCreated: {
     type: Date,
     default: Date.now
@@ -27,7 +30,7 @@ var workoutSchema   = new mongoose.Schema({
       content: String,
     }
   ],
-  keywords: [String], // array of tags that pertain to the workout
+  tags: [String], // array of tags that pertain to the workout
   //elements : [String], //array of element_ids and fields(ie weight, reps, sets, etc
   days : [
     {

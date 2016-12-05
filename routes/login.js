@@ -24,6 +24,7 @@ module.exports = function(router) {
           newUser.name = req.body.name;
           newUser.email   = req.body.email;
           newUser.Hash_password = newUser.generateHash(req.body.Hash_password);
+          newUser.liked_workouts = req.body.liked_workouts;
           //newUser.Hash_password  = auth.hash(password);
           newUser.save(function(err) {
                   if (err)

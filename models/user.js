@@ -6,6 +6,7 @@ var userSchema   = mongoose.Schema({
   email: {type : String, unique : true},
   workouts : [String],
   Hash_password : String,
+  liked_workouts :[String],
 });
 
 // methods ======================

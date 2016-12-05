@@ -34,11 +34,12 @@ module.exports = function(router) {
     });
 
     router.put('/workout/:id',function(req,res){
+        var returnObject = {};
         workout.findById(req.params.id, function(error, ele){
             if (error){
+                returnObject.message = error.message;
+                returnObject.data = {};
                 res.status(500);
-                res.json({message: ErrMsg(error)});
-                return;
             }
             if (!ele){
                 res.status(404);
@@ -46,32 +47,33 @@ module.exports = function(router) {
                 return;
             }
 
-            ele.name = req.body.name;
-            ele.description = req.body.description;
-            ele.original_user = req.body.original_user;//*original user need to be changed to null if created or previous user
-            ele.current_user = req.body.current_user;//current user need to be changed in front end
-            ele.rating = req.body.rating;
-            ele.comments = req.body.comments;
-            ele.keywords = req.body.keywords;
-            //ele.elements = req.body.elements;
-            ele.days = req.body.days;//is this enough to make a deep copy ?
-
-            ele.num_favorite = req.body.num_favorite;
-            ele.num_copy = req.body.num_copy;
-            ele.original_workout_id = req.body.original_workout_id;
-            ele.private = req.body.private;
+              ele.name = req.body.name;
+              ele.description = req.body.description;
+              ele.original_user = req.body.original_user;//!!!!!!!!!!!!!!!!!!!!!*original user need to be changed to null if created or previous user
+              ele.original_user_id = req.body.original_user_id;
+              ele.current_user = req.body.current_user;//current user need to be changed in front end
+              ele.current_user_id = req.body.current_user_id;
+              ele.original_workout_id = req.body.original_workout_id;//!!!!!!!!!!!!!!!!!!!!!*taken care in front end
+              ele.public = req.body.public;
+              ele.num_favorite = 0;
+              ele.num_copy = 0;
+              ele.tags = req.body.tags;
+              ele.comments = req.body.comments;
+              ele.days = req.body.days;//is this enough to make a deep copy ?
 
             //elements : [String], //array of element_ids and fields(ie weight, reps, sets, etc
 
             ele.save(function(err){
                 if(err){
-                    res.status(500);
-                    res.json({message: ErrMsg(error)});
+                    returnObject.message = err.message;
+                    returnObject.data = {};
                 }
                 else{
-                    res.status(201);
-                    res.json({ message: 'workout updated!'});
+                    returnObject.message = "OK";
+                    returnObject.data = ele;
+                    res.status(200);
                 }
+                res.send(returnObject);
             });
         });
     });

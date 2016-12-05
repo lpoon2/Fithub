@@ -34,6 +34,8 @@ module.exports = function(router) {
 	});
 	// put call
 	userIDsRoute.put(function(req, res) {
+	console.log("The req body for put request is: ");
+	console.log(req.body);
 	User.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true}, function(err, response) {
 		if (err) {
 			res.status(500);

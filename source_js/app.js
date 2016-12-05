@@ -6,7 +6,7 @@ app.config(function ($routeProvider) {
         templateUrl : "partials/home.html",
         controller : "homeControl"
     })
-    .when("/workout", {
+    .when("/workout/:id", {
         templateUrl : "partials/workout.html",
         controller : "workoutControl"
     })
@@ -14,13 +14,25 @@ app.config(function ($routeProvider) {
         templateUrl : "partials/createWorkout.html",
         controller : "createWorkoutControl"
     })
-    .when("/profile", {
+    .when("/edit/:id", {
+        templateUrl : "partials/editWorkout.html",
+        controller : "editWorkoutControl"
+    })
+    .when("/profile/:id", {
         templateUrl : "partials/profile.html",
         controller : "userProfileControl"
     })
     .when("/explore", {
         templateUrl : "partials/explore.html",
         controller : "exploreControl"
+    })
+    .when("/login", {
+        templateUrl : "partials/login.html",
+        controller : "loginControl"
+    })
+    .when("/signup", {
+        templateUrl : "partials/signup.html",
+        controller : "signUpControl"
     })
     .otherwise({
         redirectTo: '/home'

@@ -9,7 +9,10 @@ fitServices.factory("Fit",function($http,$window){
     },
     login : function(){
       return $http.post('/login');
-    }
+    },
+    logout: function(){
+    	return $http.get('/logout');
+	}
   }
 });
 
@@ -84,11 +87,11 @@ fitServices.factory("Workouts", function($http){
 			return $http.get(baseURL + "/workout/" + workoutID);
 		},
 		add: function(data){
-			return $http.post(baseURl+'/workout', data);
+			return $http.post(baseURL+'/workout', data);
 		},
 		// TODO Update FIX THIS
-		update: function(data){
-			return $http.put(baseURl+'/workout/' + id, data);
+		update: function(workoutid, data){
+			return $http.put(baseURL+'/workout/' + workoutid, data);
 		},
 		delete: function(workoutID) {
 			//var sessionID = $window.sessionStorage
