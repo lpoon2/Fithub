@@ -108,3 +108,30 @@ fitServices.factory("Workouts", function($http){
 		}
 	}
 });
+
+fitServices.factory("Authentication", function($http){
+	var loggedIn = false;
+	var loggedUserName = "";
+	var loggedUserID = "";
+	return{
+		isLoggedIn: function(){
+			return loggedIn;
+		},
+		userLogin: function(name, id){
+			loggedIn = true;
+			loggedUserName = name;
+			loggedUserID = id;
+		},
+		userLogout: function(){
+			loggedIn = false;
+			loggedUserName = "";
+			loggedUserID = "";
+		},
+		getUserName: function(){
+			return loggedUserName;
+		},
+		getUserID: function(){
+			return loggedUserID;
+		},
+	}
+});
