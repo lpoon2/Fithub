@@ -22,7 +22,7 @@
 
 <div id="workoutInfo" class="ui stackable grid">
 	<div class="six wide column">
-		<h2 class="workoutName">{{workout.name}}</h2>
+		<h2 class="workoutName">{{workout.name}}</h2><a href="#/edit/{{workout._id}}"><button ng-show="check_user()">Edit</button></a>
 		<p class="workoutCreator">Created by {{workout.current_user}}</p>
 	</div>
 	<div class="four wide column">

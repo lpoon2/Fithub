@@ -293,6 +293,7 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 			});
 		});
 	}
+
 }]);
 
 fithubControllers.controller('userProfileControl', ['$scope', '$window', '$location', '$routeParams', '$http', 'Fit', 'Authentication','Workouts','Users', function($scope, $window, $location, $routeParams, $http, Fit, Authentication, Workouts, Users) {
