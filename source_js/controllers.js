@@ -72,7 +72,7 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 	$scope.tags = ['lifting', 'Cardio', 'Sports', 'chest', 'Legs', 'Back', 'Arms', 'Endurance', 
 	'Strength', 'Outdoors', 'Indoors', 'Bodyweight'];
 
-	$scope.workout = {
+	/*$scope.workout = {
 		name: '3-Day chest Workout',
 		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
 		original_user: 'OnlychestDay',
@@ -139,7 +139,7 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 				]
 			},
 		]
-	};
+	};*/
 
 	$scope.addToWorkout = function(element, targetDay){
 		elementToAdd = {};
