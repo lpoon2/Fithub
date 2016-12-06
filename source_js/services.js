@@ -40,6 +40,9 @@ fitServices.factory("Users", function($http){
 		},
 		customGet: function(parameters){
 			return $http.get(baseURL + "/users?" + parameters);
+		},
+		put: function(userID, data){
+			return $http.put(baseURL + "/users/" + userID, data);
 		}
 
 	}

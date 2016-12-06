@@ -51,7 +51,7 @@ fithubControllers.controller('signUpControl', ['$scope', '$window', '$location',
    }
 }]);
 
-fithubControllers.controller('createWorkoutControl', ['$scope', '$http', 'Workouts', 'Fit', function($scope, $http, Workouts, Fit) {
+fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', function($scope, $http, $window, $location,Workouts, Fit) {
 	//Setup for navbar
 	$scope.loggedIn = $window.sessionStorage.isLogedin;
 	$scope.userID = $window.sessionStorage.user_id;
@@ -210,10 +210,24 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', 'Workou
 	  axis: 'y',
 	  duration: 800,
 	  offset: -54
-	});	
+	});
+
+	$scope.submit = function(){
+		Workouts.add($scope.workout).success(function(data){
+			var userid = $window.sessionStorage.user_id;
+			Users.getOne(userid).success(function(user){
+				user.data.workouts.push(data.data._id);
+				Users.put(userid, user.data).success(function(){
+					console.log('workout created');
+				});
+			});
+			$location.path('/workout/'+ data.data._id);
+		});
+	}
+
 }]);
 
-fithubControllers.controller('workoutControl', ['$scope', '$window', "Workouts", 'Fit', function($scope, $window, Workouts, Fit) {
+fithubControllers.controller('workoutControl', ['$scope', '$window', '$location',"Workouts", 'Fit', function($scope, $window, $location,Workouts, Fit) {
 	$scope.workoutid = $routeParams.id;
 
 	//Setup for navbar
@@ -437,14 +451,32 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', "Workouts",
 			var userid = $window.sessionStorage.user_id;
 			Users.getOne(userid).success(function(user){
 				user.data.workouts.push(data.data._id);
+				Users.put(userid, user.data).success(function(){
+					console.log('workout added');
+				});
 			});
 			$location.path('/workout/edit'+ data.data._id);
 		});
 
 	}
+
+	$scope.check_user = function(){
+		return ($scope.userID == $scope.workout.current_user_id);
+	}
+
+	$scope.favorite = function(){
+		$scope.workout.num_favorite ++;
+		Workouts.update($scope.workoutid, $scope.workout);
+		Users.getOne($scope.userID).success(function(user){
+			user.data.liked_workouts.push($scope.workout._id);
+			Users.put($scope.userID, user.data).success(function (){
+				console.log('fav successfully');
+			});
+		});
+	}
 }]);
 
-fithubControllers.controller('userProfileControl','Fit', ['$scope', function($scope,Fit) {
+fithubControllers.controller('userProfileControl','Fit', ['$scope', '$window', '$location',function($scope,$window, $location,Fit) {
 	//Setup for navbar
 	$scope.loggedIn = $window.sessionStorage.isLogedin;
 	$scope.userID = $window.sessionStorage.user_id;
