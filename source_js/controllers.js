@@ -190,10 +190,10 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 	$scope.submit = function(){
 		Workouts.add($scope.workout).success(function(data){
 			console.log(data);
-			Users.getOne($scope.userID).success(function(user){
+			Users.customGet('where={"_id":"'+$scope.userID+'"}').success(function(user){
 				console.log(user);
-				user.data.workouts.push(data.data._id);
-				Users.put($scope.userID, user.data).success(function(){
+				user.data[0].workouts.push(data.data._id);
+				Users.put($scope.userID, user.data[0]).success(function(){
 					console.log('workout created');
 				});
 			});
@@ -203,12 +203,15 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 
 }]);
 
-fithubControllers.controller('workoutControl', ['$scope', '$window', '$location',"Workouts", 'Fit','Authentication', function($scope, $window, $location,Workouts, Fit, Authentication) {
-	//$scope.workoutid = $routeParams.id;
+fithubControllers.controller('workoutControl', ['$scope', '$window', '$location', '$routeParams', "Workouts", 'Fit','Authentication', 'Users', function($scope, $window, $location, $routeParams, Workouts, Fit, Authentication, Users) {
+	$scope.workoutid = $routeParams.id;
 
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
+	$scope.userID = Authentication.getUserID();
+	console.log($scope.userID);
+
 	$scope.logout = function(){
 		Authentication.userLogout();
 		$location.path('/home');
@@ -218,177 +221,7 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 		console.log('get the workout');
 		$scope.workout = data.data;
 	});
-/*	$scope.workout = {
-		name: '3-Day chest Workout',
-		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
-		original_user: 'OnlychestDay',
-		current_user: 'OnlychestDay',
-		rating: 32,
-		copies: 12,
-		comments: [
-			{
-				user: 'John Smith',
-				body: 'This is a great workout! I will be starting it ASAP.'
-			},
-			{
-				user: 'Harry Potter',
-				body: 'Really good workout. I suggest possibly swapping biking for a second day of swimming on Thursday as it is more involved for the chest.'
-			},
-			{
-				user: 'Thomas Brethauer',
-				body: 'Looks like a great workout, but everyone knows only leg day counts!'
-			},
-		],
-		days : [
-			{
-				day: 'Sunday',
-				elements: [
-				]
-			},
-			{
-				day: 'Monday',
-				elements: [
-					{
-						element: 'Barbell Bench Press',
-						sets: '3',
-						reps: '12',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Dumbbell Press',
-						sets: '3',
-						reps: '12',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Incline Press',
-						sets: '5',
-						reps: '8',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Decline Press',
-						sets: '5',
-						reps: '8',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Push Ups',
-						sets: '3',
-						reps: '30',
-						time: '',
-						distance: '',
-					},
-				]
-			},
-			{
-				day: 'Tuesday',
-				elements: [
-					{
-						element: 'Swimming',
-						sets: '',
-						reps: '',
-						time: '45 min',
-						distance: '1 mi',
-					},
-				]
-			},
-			{
-				day: 'Wednesday',
-				elements: [
-					{
-						element: 'Push Ups',
-						sets: '3',
-						reps: '30',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Dumbbell Flies',
-						sets: '3',
-						reps: '12',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Dips',
-						sets: '3',
-						reps: '30',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Cable Crosses',
-						sets: '5',
-						reps: '8',
-						time: '',
-						distance: '',
-					},
-				]
-			},
-			{
-				day: 'Thursday',
-				elements: [
-					{
-						element: 'Biking',
-						sets: '',
-						reps: '',
-						time: '45 min',
-						distance: '5 mi',
-					},
-				]
-			},
-			{
-				day: 'Friday',
-				elements: [
-					{
-						element: 'Incline Press',
-						sets: '5',
-						reps: '8',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Decline Press',
-						sets: '5',
-						reps: '8',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Push Ups',
-						sets: '3',
-						reps: '30',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Maltese Flies',
-						sets: '3',
-						reps: '10',
-						time: '',
-						distance: '',
-					},
-					{
-						element: 'Dips',
-						sets: '3',
-						reps: '30',
-						time: '',
-						distance: '',
-					},
-				]
-			},
-			{
-				day: 'Saturday',
-				elements: [
-				]
-			},
-		]
-	}*/
+
 	$scope.tabs = [{
         title: 'Summary',
         url: 'summaryView'
@@ -452,11 +285,12 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 	}
 }]);
 
-fithubControllers.controller('userProfileControl', ['$scope', '$window', '$location', 'Fit', 'Authentication', function($scope,$window, $location,Fit,Authentication) {
+fithubControllers.controller('userProfileControl', ['$scope', '$window', '$location', '$routeParams', '$http', 'Fit', 'Authentication','Workouts','Users', function($scope, $window, $location, $routeParams, $http, Fit, Authentication, Workouts, Users) {
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
 	$scope.userID = Authentication.getUserID();
+
 	$scope.logout = function(){
 		Authentication.userLogout();
 		$location.path('/home');
@@ -469,56 +303,40 @@ fithubControllers.controller('userProfileControl', ['$scope', '$window', '$locat
 		return ($scope.userID == $scope.workout.current_user_id);
 	}*/
 	// get the workouts of the user
-	var same_user = ($scope.userID == $scope.workout.current_user_id);
+	var same_user = ($scope.userID == $routeParams.id);
+
+	Users.customGet('where={"_id":"'+$routeParams.id+'"}').success(function(data){
+		console.log(data);
+		$scope.user = data.data[0];
+	});
+
 	if (same_user){
-		Workouts.customGet('where={"current_user_id":' + $scope.userID).success(function(data){
+		Workouts.customGet('where={"current_user_id":"' + $routeParams.id + '"}').success(function(data){
 			console.log('get workouts');
+			console.log(data);
 			$scope.workouts = data.data;
 		});
 	}else {
-		Workouts.customGet('where={"current_user_id":' + $scope.userID + ', "public":true}').success(function(data){
+		Workouts.customGet('where={"current_user_id":"' + $routeParams.id + '", "public":true}').success(function(data){
 			console.log('get workouts');
-			$scope.workouts = data.data;
+			console.log(data);
+			$scope.workouts = data;
 		});
 	}
 
-	/*$scope.workouts = [
-		{
-			name: 'Workout 1',
-			description: 'A random workout description',
-			favCount: 32,
-			copyCount: 12,
-			tags: ['lifting', 'chest']
-		},
-		{
-			name: 'Workout 2',
-			description: 'A chest only workout. Optimized for 3 days a week',
-			favCount: 32,
-			copyCount: 12,
-			tags: ['lifting', 'chest']
-		},
-		{
-			name: 'Workout 3',
-			description: 'Cardio intensive workout. Heavy focus on swimming and full body.',
-			favCount: 32,
-			copyCount: 12,
-			tags: ['lifting', 'chest']
-		},
-		{
-			name: 'Workout 4',
-			description: 'A random workout description',
-			favCount: 32,
-			copyCount: 12,
-			tags: ['lifting', 'chest']
-		},
-		{
-			name: 'Workout 5',
-			description: 'A random workout description',
-			favCount: 32,
-			copyCount: 12,
-			tags: ['lifting', 'chest']
-		},
-	];*/
+	$scope.filterByOriginal = function(workout){
+		if(workout.current_user == workout.original_user){
+			return true;
+		}
+		return false;
+	}
+
+	$scope.filterByCopied = function(workout){
+		if(workout.current_user != workout.original_user){
+			return true;
+		}
+		return false;
+	}
 
 }]);
 
@@ -536,48 +354,6 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 		console.log('get workouts');
 		$scope.workouts = data.data;
 	});
-	/*$scope.workouts = [
-		{
-			name: 'Workout 1',
-			current_user: 'Marlon',
-			description: 'A random workout description',
-			favCount: 32,
-			copyCount: 12,
-			tags: ['lifting', 'chest']
-		},
-		{
-			name: 'Workout 2',
-			current_user: 'Bobby',
-			description: 'A chest only workout. Optimized for 3 days a week',
-			favCount: 29,
-			copyCount: 12,
-			tags: ['lifting', 'legs']
-		},
-		{
-			name: 'Workout 3',
-			current_user: 'Jacob',
-			description: 'Cardio intensive workout. Heavy focus on swimming and full body.',
-			favCount: 1,
-			copyCount: 12,
-			tags: ['lifting', 'chest']
-		},
-		{
-			name: 'Workout 4',
-			current_user: 'Chandler',
-			description: 'A random workout description',
-			favCount: 4,
-			copyCount: 12,
-			tags: ['lifting', 'legs']
-		},
-		{
-			name: 'Workout 5',
-			current_user: 'Andreas',
-			description: 'A random workout description',
-			favCount: 20,
-			copyCount: 12,
-			tags: ['lifting', 'chest']
-		},
-	];*/
 
 	$scope.filterQuery = function(workout){
 		if($scope.query == "" || $scope.query == undefined){
@@ -617,7 +393,7 @@ fithubControllers.controller('loginControl', ['$scope', '$window','$location','F
 				var param = 'where={"email":"' + $scope.loginObject.email + '"}';
 				Users.customGet(param).success(function(data){
 					console.log(data);
-					Authentication.userLogin(data.data[0].name, data.data[0].id);
+					Authentication.userLogin(data.data[0].name, data.data[0]._id);
 					$location.path('/explore');
 				});
 			});
