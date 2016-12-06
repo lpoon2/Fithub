@@ -29,7 +29,7 @@
 	</div>
 	<div class="three wide column">
 		<div class="ui labeled small button" tabindex="0">
-		  <div class="ui button">
+		  <div ng-click="favorite()" ng-show="favorited == false" class="ui button">
 		    <i class="star icon"></i> Fav
 		  </div>
 		  <a class="ui basic left pointing label">
@@ -39,7 +39,7 @@
 	</div>
 	<div class="three wide column">
 		<div class="ui labeled small button" tabindex="0">
-		  <div class="ui button">
+		  <div ng-click="copy()" class="ui button">
 		    <i class="copy icon"></i> Copy
 		  </div>
 		  <a class="ui basic left pointing label">
@@ -110,12 +110,15 @@
 <div class="ui grid commentSection">
 	<div class="row">
 		<div class="one wide column"></div>
-		<div class="fourteen wide column inputField">
+		<div class="twelve wide column inputField">
 			<div class="ui form">
 				<div class="field">
-				    <textarea rows="2" placeholder="Write a new comment!"></textarea>
+				    <textarea ng-show="userID != '' " ng-model="commentBody" rows="2" placeholder="Write a new comment!"></textarea>
 				</div>
 			</div>
+		</div>
+		<div class="three wide column">
+			<button ng-show="userID != '' " ng-click="comment()" class="ui fluid button">Comment</button>
 		</div>
 	</div>
 	<div ng-repeat="comment in workout.comments" class="row">
@@ -126,7 +129,7 @@
 			    <p>{{comment.user}}</p>
 			  </div>
 			  <div class="ui segment commentBody">
-			    <p>{{comment.body}}</p>
+			    <p>{{comment.content}}</p>
 			  </div>
 			</div>
 		</div>

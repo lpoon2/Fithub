@@ -15,6 +15,18 @@ module.exports = function(router) {
     return msg;
   }
 
+router.get('/workout/public', function(req, res){
+work.find({public : true }, function(err, obj){
+if(err){
+    res.send(err);
+}
+  else{
+    res.json(obj);
+  }
+});
+
+});  
+
 router.get('/workout', function(req,res){
   var selectObject = {};
   var queryObject = {};

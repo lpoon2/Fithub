@@ -107,7 +107,10 @@ fitServices.factory("Workouts", function($http){
 		customGet: function(parameters){
 			console.log(baseURL + "/workout?" + parameters);
 			return $http.get(baseURL + "/workout?" + parameters);
-		}
+		},
+		get_public : function(){
+	      return $http.get(baseURL + "/workout/public");
+	    }
 	}
 });
 

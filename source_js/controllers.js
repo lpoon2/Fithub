@@ -56,13 +56,6 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 	$scope.tags = ['lifting', 'Cardio', 'Sports', 'chest', 'Legs', 'Back', 'Arms', 'Endurance', 
 	'Strength', 'Outdoors', 'Indoors', 'Bodyweight'];
 
-	/*$scope.workout = {
-		name: '3-Day chest Workout',
-		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
-		original_user: 'OnlychestDay',
-		current_user: 'OnlychestDay',
-		rating: 32,
-		copies: 12,
 	$scope.workout = {
 		name: '',
 		description: '',
@@ -120,7 +113,7 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 				]
 			},
 		]
-	};*/
+	};
 
 	$scope.workout.original_user = $scope.userName;
 	$scope.workout.original_workout_id = '';
@@ -214,8 +207,13 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 
 }]);
 
-fithubControllers.controller('workoutControl', ['$scope', '$window', '$location', '$routeParams', "Workouts", 'Fit','Authentication', 'Users', function($scope, $window, $location, $routeParams, Workouts, Fit, Authentication, Users) {
-	$scope.workoutid = $routeParams.id;
+
+fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window', '$location', '$routeParams', 'Workouts', 'Fit', 'Authentication', 'Users', function($scope, $http, $window, $location, $routeParams, Workouts, Fit, Authentication, Users) {
+	$scope.workoutID = $routeParams.id;
+	Workouts.getOne($scope.workoutID).success(function(data){
+		console.log(data);
+		$scope.workout = data.data;
+	})
 
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();
@@ -226,6 +224,122 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 		Authentication.userLogout();
 		$location.path('/home');
 	}
+
+	$scope.elements = ['Bench Press', 'Biking', 'Dumbbell Flies', 
+						'Leg Extensions', 'Tennis', 'Basketball', 'Bicep Curls', 'Maltese Flies'];
+
+	$scope.tags = ['lifting', 'Cardio', 'Sports', 'chest', 'Legs', 'Back', 'Arms', 'Endurance', 
+	'Strength', 'Outdoors', 'Indoors', 'Bodyweight'];
+
+	
+	
+
+	$scope.addToWorkout = function(element, targetDay){
+		elementToAdd = {};
+		elementToAdd.name = element;
+		elementToAdd.sets = '';
+		elementToAdd.reps = '';
+		elementToAdd.time = '';
+		elementToAdd.distance = '';
+		for(var i = 0; i<$scope.workout.days.length; i++){
+			if($scope.workout.days[i].day == targetDay){
+				elementToAdd.index = $scope.workout.days[i].currIndex;
+				$scope.workout.days[i].elements.push(elementToAdd);
+				$scope.workout.days[i].currIndex++;
+			}
+		}
+	};
+
+	$scope.removeFromWorkout = function(elementIndex, targetDay){
+		for(var i = 0; i<$scope.workout.days.length; i++){
+			if($scope.workout.days[i].day == targetDay){
+				for(var j = 0; j < $scope.workout.days[i].elements.length; j++){
+					if($scope.workout.days[i].elements[j].index == elementIndex){
+						$scope.workout.days[i].elements.splice(j, 1);
+					}
+				}
+			}
+		}
+	}
+
+	$scope.scrollToTarget = function(target){
+		console.log(target);
+		$.scrollTo($(target));
+	}
+
+	$scope.setActiveElement = function(element){
+		$scope.activeElement = element;
+		$('#addedElementModal')
+		  .modal('show')
+		;
+	}
+
+	$scope.setPeekElement = function(element){
+		$scope.peekElement = element;
+		$('#elementModal')
+		  .modal('show')
+		;
+	}
+
+	$scope.toggleTag = function(tag){
+		var tagIndex = $scope.workout.tags.indexOf(tag);
+		if ( tagIndex == -1){
+			$scope.workout.tags.push(tag);
+		}else{
+			$scope.workout.tags.splice(tagIndex,1);
+		}
+		console.log($scope.workout.tags);
+	}
+
+	$scope.getTagClass = function(tag){
+		if ($scope.workout.tags.indexOf(tag) != -1){
+			return 'ui button tagButton'
+		}else{
+			return 'ui button tagButton active'
+		}
+	}
+
+	$.extend($.scrollTo.defaults, {
+	  axis: 'y',
+	  duration: 800,
+	  offset: -54
+	});
+
+	$scope.update = function(){
+		Workouts.update($scope.workoutID, $scope.workout).success(function(data){
+			console.log(data);
+			$location.path('/workout/'+ data.data._id);
+		});
+	}
+
+
+}]);
+
+fithubControllers.controller('workoutControl', ['$scope', '$window', '$location', '$routeParams', "Workouts", 'Fit','Authentication', 'Users', function($scope, $window, $location, $routeParams, Workouts, Fit, Authentication, Users) {
+	$scope.workoutid = $routeParams.id;
+	$scope.favorited = true;
+	//Setup for navbar
+	$scope.loggedIn = Authentication.isLoggedIn();
+	$scope.userName = Authentication.getUserName();
+	$scope.userID = Authentication.getUserID();
+
+	$scope.logout = function(){
+		Authentication.userLogout();
+		$location.path('/home');
+	}
+
+	if($scope.userID != ""){
+		Users.customGet('where={"_id":"'+$scope.userID+'"}').success(function(data){
+			console.log(data);
+			$scope.user = data.data[0];
+			if($scope.user.liked_workouts.indexOf($scope.workoutid) == -1){
+				$scope.favorited = false;
+			}else{
+				$scope.favorited = true;
+			}
+		});
+	}
+	
 
 	Workouts.getOne($scope.workoutid).success(function(data){
 		console.log('get the workout');
@@ -260,19 +374,17 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 		newWorkout._id = undefined;
 		newWorkout.comments = [];
 		newWorkout.dateCreated = undefined;
-		newWorkout.original_user = $scope.workout.current_user;
-		newWorkout.original_user_id = $scope.workout.current_user_id;
 		newWorkout.current_user = $scope.userName;
 		newWorkout.current_user_id = $scope.userID;
 		Workouts.add(newWorkout).success(function(data){
-			var userid = $window.sessionStorage.user_id;
-			Users.getOne(userid).success(function(user){
-				user.data.workouts.push(data.data._id);
-				Users.put(userid, user.data).success(function(){
-					console.log('workout added');
+			console.log(data);
+			Users.customGet('where={"_id":"'+$scope.userID+'"}').success(function(user){
+				user.data[0].workouts.push(data.data._id);
+				Users.put($scope.userID, user.data[0]).success(function (){
+					console.log('workoutCopied');
 				});
 			});
-			$location.path('/workout/edit'+ data.data._id);
+			$location.path('/edit/'+ data.data._id);
 		});
 
 	}
@@ -283,17 +395,30 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 
 	$scope.favorite = function(){
 		$scope.workout.num_favorite ++;
-		Workouts.update($scope.workoutid, $scope.workout).success(function(){
+		console.log($scope.workout);
+		Workouts.update($scope.workoutid, $scope.workout).success(function(data){
 			console.log('update the workout');
+			console.log(data);
 		});
-		Users.getOne($scope.userID).success(function(user){
-			user.data.liked_workouts.push($scope.workout._id);
-			Users.put($scope.userID, user.data).success(function (){
+		Users.customGet('where={"_id":"'+$scope.userID+'"}').success(function(user){
+			user.data[0].liked_workouts.push($scope.workout._id);
+			Users.put($scope.userID, user.data[0]).success(function (){
 				console.log('fav successfully');
+				$scope.favorited = true;
 			});
 		});
 	}
 
+	$scope.comment = function(){
+		$scope.newCommt = {};
+		$scope.newCommt.user = $scope.userName;
+		$scope.newCommt.content = $scope.commentBody; //$scope.content binded to front end
+		$scope.workout.comments.push($scope.newCommt);
+		Workouts.update($scope.workoutid, $scope.workout).success(function(data){
+			console.log(data);
+			console.log('workout updated with new comment');
+		});
+	}
 }]);
 
 fithubControllers.controller('userProfileControl', ['$scope', '$window', '$location', '$routeParams', '$http', 'Fit', 'Authentication','Workouts','Users', function($scope, $window, $location, $routeParams, $http, Fit, Authentication, Workouts, Users) {
@@ -363,9 +488,10 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 	}
 
 	$scope.sortParameter = 'favCount';
-	Workouts.get().success(function(data){
+	Workouts.get_public().success(function(data){
 		console.log('get workouts');
-		$scope.workouts = data.data;
+		console.log(data);
+		$scope.workouts = data;
 	});
 
 	$scope.filterQuery = function(workout){
@@ -386,6 +512,8 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 	$scope.toggleSort = function(sort){
 		$scope.sortParameter = sort;
 	}
+
+	
 
 }]);
 
@@ -411,8 +539,4 @@ fithubControllers.controller('loginControl', ['$scope', '$window','$location','F
 				});
 			});
 	}
-}]);
-
-fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', 'Authentication', 'Users', function($scope, $http, $window, $location,Workouts, Fit, Authentication, Users) {
-
 }]);

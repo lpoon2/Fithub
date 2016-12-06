@@ -35,7 +35,7 @@
 				<div ng-repeat="workout in workouts" class="column">
 					<div class="ui segments workoutCard">
 						<div class="ui segment cardHeader">
-							{{workout.name}}
+							<a ng-href="#/workout/{{workout._id}}">{{workout.name}}</a>
 							<div class="headerInfo">
 								<i class="star icon"></i> {{workout.favCount}}
 							</div>
