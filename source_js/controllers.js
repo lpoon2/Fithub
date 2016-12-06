@@ -243,8 +243,11 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 			return true
 		return false;
 	}
-
-	$scope.workout = {
+	Workouts.getOne($scope.workoutid).success(function(data){
+		console.log('get the workout');
+		$scope.workout = data.data;
+	});
+/*	$scope.workout = {
 		name: '3-Day chest Workout',
 		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
 		original_user: 'OnlychestDay',
@@ -414,7 +417,7 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 				]
 			},
 		]
-	}
+	}*/
 	$scope.tabs = [{
         title: 'Summary',
         url: 'summaryView'
@@ -445,8 +448,8 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 		newWorkout.dateCreated = undefined;
 		newWorkout.original_user = $scope.workout.current_user;
 		newWorkout.original_user_id = $scope.workout.current_user_id;
-		newWorkout.current_user = "hahaha";
-		newWorkout.current_user_id = 1234;
+		newWorkout.current_user = $scope.userName;
+		newWorkout.current_user_id = $scope.userID;
 		Workouts.add(newWorkout).success(function(data){
 			var userid = $window.sessionStorage.user_id;
 			Users.getOne(userid).success(function(user){
@@ -466,7 +469,9 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 
 	$scope.favorite = function(){
 		$scope.workout.num_favorite ++;
-		Workouts.update($scope.workoutid, $scope.workout);
+		Workouts.update($scope.workoutid, $scope.workout).success(function(){
+			console.log('update the workout');
+		});
 		Users.getOne($scope.userID).success(function(user){
 			user.data.liked_workouts.push($scope.workout._id);
 			Users.put($scope.userID, user.data).success(function (){
@@ -481,6 +486,7 @@ fithubControllers.controller('userProfileControl','Fit', ['$scope', '$window', '
 	$scope.loggedIn = $window.sessionStorage.isLogedin;
 	$scope.userID = $window.sessionStorage.user_id;
 	$scope.userName = $window.sessionStorage.user_name;
+	$scope.currentUser = $routeParams.id;
 	$scope.logout = function(){
 		Fit.logout();
 	}
@@ -493,8 +499,24 @@ fithubControllers.controller('userProfileControl','Fit', ['$scope', '$window', '
 	$('.menu .item')
 	  .tab()
 	;
+	/*$scope.check_user = function(){
+		return ($scope.userID == $scope.workout.current_user_id);
+	}*/
+	// get the workouts of the user
+	var same_user = ($scope.userID == $scope.workout.current_user_id);
+	if (same_user){
+		Workouts.customGet('where={"current_user_id":' + $scope.userID).success(function(data){
+			console.log('get workouts');
+			$scope.workouts = data.data;
+		});
+	}else {
+		Workouts.customGet('where={"current_user_id":' + $scope.userID + ', "public":true}').success(function(data){
+			console.log('get workouts');
+			$scope.workouts = data.data;
+		});
+	}
 
-	$scope.workouts = [
+	/*$scope.workouts = [
 		{
 			name: 'Workout 1',
 			description: 'A random workout description',
@@ -530,7 +552,7 @@ fithubControllers.controller('userProfileControl','Fit', ['$scope', '$window', '
 			copyCount: 12,
 			tags: ['lifting', 'chest']
 		},
-	];
+	];*/
 
 }]);
 
@@ -550,7 +572,11 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 	}
 
 	$scope.sortParameter = 'favCount';
-	$scope.workouts = [
+	Workouts.get().success(function(data){
+		console.log('get workouts');
+		$scope.workouts = data.data;
+	});
+	/*$scope.workouts = [
 		{
 			name: 'Workout 1',
 			current_user: 'Marlon',
@@ -591,7 +617,7 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 			copyCount: 12,
 			tags: ['lifting', 'chest']
 		},
-	];
+	];*/
 
 	$scope.filterQuery = function(workout){
 		if($scope.query == "" || $scope.query == undefined){
