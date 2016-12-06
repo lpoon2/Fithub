@@ -12,7 +12,7 @@
   		<a href="#/login" class="small ui button">Login</a>
   	</div>
   	<div ng-show="loggedIn == true;" class="item">
-  		<a href="#/profile/123"><i class="user icon"></i> {{userName}}</a>
+  		<a href="#/profile/{{userID}}"><i class="user icon"></i> {{userName}}</a>
   	</div>
   	<div ng-show="loggedIn == true;" class="item">
   		<button ng-click="logout()" class="small ui button">Logout</button>
@@ -33,7 +33,7 @@
 		    <i class="star icon"></i> Fav
 		  </div>
 		  <a class="ui basic left pointing label">
-		    32
+		    {{workout.num_favorite}}
 		  </a>
 		</div>
 	</div>
@@ -43,7 +43,7 @@
 		    <i class="copy icon"></i> Copy
 		  </div>
 		  <a class="ui basic left pointing label">
-		    12
+		    {{workout.num_copy}}
 		  </a>
 		</div>
 	</div>
@@ -74,7 +74,7 @@
 						</div>
 					</div>
 					<div ng-repeat="element in day.elements" class="workoutElement">
-						{{element.element}}
+						{{element.name}}
 					</div>
 				</div>
 			</div>
@@ -95,7 +95,7 @@
 			  			<td>{{day.day}}</td>
 			  		</tr>
 			  		<tr ng-repeat="element in day.elements">
-			  		  <td>{{element.element}}</td>
+			  		  <td>{{element.name}}</td>
 			  		  <td>{{element.sets}}</td>
 			  		  <td>{{element.reps}}</td>
 			  		  <td>{{element.time}}</td>

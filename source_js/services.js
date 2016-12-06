@@ -29,6 +29,7 @@ fitServices.factory("Users", function($http){
 		},
 		getOne: function(userID) {
 			//var sessionID = $window.sessionStorage
+			console.log(baseURL + "/users/" + userID);
 			return $http.get(baseURL + "/users/" + userID);
 		},
 		add: function(data){
@@ -104,6 +105,7 @@ fitServices.factory("Workouts", function($http){
 			return $http.delete(baseURL + "/workout/" + workoutID);
 		},
 		customGet: function(parameters){
+			console.log(baseURL + "/workout?" + parameters);
 			return $http.get(baseURL + "/workout?" + parameters);
 		}
 	}
