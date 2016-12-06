@@ -431,6 +431,12 @@ body{
 
 
 // Login Page
+.error{
+	text-align: center;
+	font-weight: 700;
+	font-size: 36px;
+	background-color: $red;
+}
 
 .loginPage{
 	margin-top: $big-margin !important;

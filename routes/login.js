@@ -7,14 +7,14 @@ module.exports = function(router) {
     User.findOne({ 'email' :  req.body.email }, function(err, user) {
         // if there are any errors, return the error
         if (err)
-        return res.status(401).json({
+        return res.status(500).json({
           err: err,
           signup: false
         });
 
         // check to see if theres already a user with that email
         if (user) {
-          return res.status(401).json({
+          return res.status(500).json({
             err: 'user already exist!',
             signup: false
           });
@@ -29,7 +29,7 @@ module.exports = function(router) {
           newUser.save(function(err) {
                   if (err)
                       throw err;
-                      return res.status(401).json({
+                      return res.status(201).json({
                         err: 'user sign up success!',
                         signup: true
                       });

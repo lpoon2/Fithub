@@ -52,6 +52,9 @@
 							Login
 						</button>
 					</div>
+					<div class="error" data-ng-messages="loginFail" data-ng-show="LoginWorked == false" data-ng-cloak>
+            			<p data-ng-message="loginFail">Unable to Log in</p>
+       		 		</div>
 				</div>
 			</div>
 		</div>

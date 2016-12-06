@@ -32,10 +32,15 @@ fithubControllers.controller('signUpControl', ['$scope', '$window', '$location',
 		var param = 'where={"email":"' + $scope.signUpObject.email + '"}';
 		Users.customGet(param).success(function(data){
 			console.log(data);
+			$scope.signUpWorked = true;
 			Authentication.userLogin(data.data[0].name, data.data[0].id);
 			$location.path('/explore');
 		});
-	  });
+	  }).error(function(data){
+	  		console.log("Sign Up failed...");
+			$scope.signUpObject = {};
+			$scope.signUpWorked = false;
+	});
    }
 }]);
 
@@ -585,9 +590,14 @@ fithubControllers.controller('loginControl', ['$scope', '$window','$location','F
 				var param = 'where={"email":"' + $scope.loginObject.email + '"}';
 				Users.customGet(param).success(function(data){
 					console.log(data);
+					$scope.LoginWorked = true;
 					Authentication.userLogin(data.data[0].name, data.data[0]._id);
 					$location.path('/explore');
 				});
+			}).error(function(data){
+				console.log("Unable to log in. Try again");
+				$scope.loginObject = {};
+				$scope.LoginWorked = false;
 			});
 	}
 }]);

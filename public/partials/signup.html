@@ -60,15 +60,18 @@
 						<div class="ui form">
 							<div class="field">
 							    <label>Confirm Password</label>
-							    <input class="input" type="password" name="password">
+							    <input ng-model="signUpObject.confirmPass" class="input" type="password" name="password">
 							</div>
 						</div>
 					</div>
 					<div class="center aligned column">
-						<button ng-click="signUp()" class="ui button loginButton">
+						<button ng-show="signUpObject.Hash_password == signUpObject.confirmPass && (signUpObject.Hash_password != undefined); " ng-click="signUp()" class="ui button loginButton">
 							Sign Up
 						</button>
 					</div>
+					<div class="error" data-ng-messages="SignUpFail" data-ng-show="signUpWorked == false" data-ng-cloak>
+            			<p data-ng-message="SignUpFail">Unable to Sign Up</p>
+       		 		</div>
 				</div>
 			</div>
 		</div>
