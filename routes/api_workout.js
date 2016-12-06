@@ -49,7 +49,7 @@ work.find({current_user: req.user.name},function(err, obj){
 router.post('/workout',function(req,res){
   var returnObject = {};
   var ele = new work();
-
+  console.log(req.body);
   //Entire new workout object
   ele.name = req.body.name;
   ele.description = req.body.description;
@@ -68,7 +68,7 @@ router.post('/workout',function(req,res){
   
   ele.save(function(err){
     if(err){
-      res.status(500);
+      console.log(err.message);
       returnObject.message = err.message;
       returnObject.data = {};
       res.status(500);

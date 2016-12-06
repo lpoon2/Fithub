@@ -1,6 +1,6 @@
 var fitServices=angular.module("fitServices",[]);
 // TODO Change this
-var baseURL = "http://fa16-cs498rk-059.cs.illinois.edu:3000/api";
+var baseURL = "http://localhost:3000/api";
 
 fitServices.factory("Fit",function($http,$window,$location){
   return{

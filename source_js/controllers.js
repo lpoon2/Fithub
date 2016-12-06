@@ -35,10 +35,12 @@ fithubControllers.controller('signUpControl', ['$scope', '$window', '$location',
    }
 }]);
 
-fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', 'Authentication', function($scope, $http, $window, $location,Workouts, Fit, Authentication) {
+fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', 'Authentication', 'Users', function($scope, $http, $window, $location,Workouts, Fit, Authentication, Users) {
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
+	$scope.userID = Authentication.getUserID();
+
 	$scope.logout = function(){
 		Authentication.userLogout();
 		$location.path('/home');
@@ -51,27 +53,17 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 	'Strength', 'Outdoors', 'Indoors', 'Bodyweight'];
 
 	$scope.workout = {
-		name: '3-Day chest Workout',
-		description: 'A 3 day chest only focus along with two days of chest oriented cardio',
-		original_user: 'OnlychestDay',
-		current_user: 'OnlychestDay',
-		rating: 32,
-		copies: 12,
+		name: '',
+		description: '',
+		num_favorite: 0,
+		num_copy: 0,
+		original_user: '',
+		original_workout_id : '',
+		current_user: '',
+		current_user_id: '',
+		public: false,
+		comments: [],
 		tags: [],
-		comments: [
-			{
-				user: 'John Smith',
-				body: 'This is a great workout! I will be starting it ASAP.'
-			},
-			{
-				user: 'Harry Potter',
-				body: 'Really good workout. I suggest possibly swapping biking for a second day of swimming on Thursday as it is more involved for the chest.'
-			},
-			{
-				user: 'Thomas Brethauer',
-				body: 'Looks like a great workout, but everyone knows only leg day counts!'
-			},
-		],
 		days : [
 			{
 				day: 'Sunday',
@@ -119,9 +111,14 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 		]
 	};
 
+	$scope.workout.original_user = $scope.userName;
+	$scope.workout.original_workout_id = '';
+	$scope.workout.current_user = $scope.userName;
+	$scope.workout.current_user_id = $scope.userID;
+
 	$scope.addToWorkout = function(element, targetDay){
 		elementToAdd = {};
-		elementToAdd.element = element;
+		elementToAdd.name = element;
 		elementToAdd.sets = '';
 		elementToAdd.reps = '';
 		elementToAdd.time = '';
@@ -192,10 +189,11 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 
 	$scope.submit = function(){
 		Workouts.add($scope.workout).success(function(data){
-			var userid = $window.sessionStorage.user_id;
-			Users.getOne(userid).success(function(user){
+			console.log(data);
+			Users.getOne($scope.userID).success(function(user){
+				console.log(user);
 				user.data.workouts.push(data.data._id);
-				Users.put(userid, user.data).success(function(){
+				Users.put($scope.userID, user.data).success(function(){
 					console.log('workout created');
 				});
 			});
@@ -206,7 +204,7 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 }]);
 
 fithubControllers.controller('workoutControl', ['$scope', '$window', '$location',"Workouts", 'Fit','Authentication', function($scope, $window, $location,Workouts, Fit, Authentication) {
-	$scope.workoutid = $routeParams.id;
+	//$scope.workoutid = $routeParams.id;
 
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();

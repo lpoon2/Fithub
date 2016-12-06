@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
 
 var elemDetail = new mongoose.Schema({
-  name:{type: String, required:true},
+  name: String,
   index: Number,
   elementid: String,
-  reps: Number,
-  sets: Number,
-  time: Number,
-  distance: Number,
+  reps: String,
+  sets: String,
+  time: String,
+  distance: String,
 });
 var workoutSchema   = new mongoose.Schema({
   name: String,
