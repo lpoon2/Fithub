@@ -39,7 +39,7 @@ fithubControllers.controller('signUpControl', ['$scope', '$window', '$location',
    }
 }]);
 
-fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', 'Authentication', 'Users', function($scope, $http, $window, $location,Workouts, Fit, Authentication, Users) {
+fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', 'Authentication', 'Users', 'Elements', function($scope, $http, $window, $location,Workouts, Fit, Authentication, Users, Elements) {
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
@@ -50,11 +50,13 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 		$location.path('/home');
 	}
 
-	$scope.elements = ['Bench Press', 'Biking', 'Dumbbell Flies', 
-						'Leg Extensions', 'Tennis', 'Basketball', 'Bicep Curls', 'Maltese Flies'];
+	Elements.get().success(function(data){
+		console.log(data);
+		$scope.elements = data;
+	})
 
-	$scope.tags = ['lifting', 'Cardio', 'Sports', 'chest', 'Legs', 'Back', 'Arms', 'Endurance', 
-	'Strength', 'Outdoors', 'Indoors', 'Bodyweight'];
+	$scope.tags = ['lifting', 'cardio', 'sports', 'chest', 'legs', 'back', 'arms', 'endurance', 
+	'strength', 'outdoors', 'indoors', 'bodyweight'];
 
 	$scope.workout = {
 		name: '',
@@ -122,7 +124,8 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 
 	$scope.addToWorkout = function(element, targetDay){
 		elementToAdd = {};
-		elementToAdd.name = element;
+		elementToAdd.name = element.name;
+		elementToAdd.elementid = element._id;
 		elementToAdd.sets = '';
 		elementToAdd.reps = '';
 		elementToAdd.time = '';
@@ -155,13 +158,21 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 
 	$scope.setActiveElement = function(element){
 		$scope.activeElement = element;
+		console.log($scope.activeElement);
+		Elements.getOne($scope.activeElement.elementid).success(function(data){
+			console.log(data);
+			$scope.activeSource = data[0].media;
+			$scope.activeDescription = data[0].description;
+		})
 		$('#addedElementModal')
 		  .modal('show')
 		;
 	}
 
 	$scope.setPeekElement = function(element){
-		$scope.peekElement = element;
+		$scope.peekElement = element.name;
+		$scope.peekSource = element.media;
+		$scope.peekDescription = element.description;
 		$('#elementModal')
 		  .modal('show')
 		;
@@ -309,6 +320,15 @@ fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window'
 		Workouts.update($scope.workoutID, $scope.workout).success(function(data){
 			console.log(data);
 			$location.path('/workout/'+ data.data._id);
+		});
+	}
+
+	$scope.delete = function(){
+		console.log('To delete')
+		Workouts.delete($scope.workoutID).success(function(data){
+			console.log('workout deleted');
+			console.log(data);
+			$location.path('/profile/'+$scope.userID);
 		});
 	}
 
@@ -513,7 +533,7 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 		$scope.sortParameter = sort;
 	}
 
-	
+
 
 }]);
 

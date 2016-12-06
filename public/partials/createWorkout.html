@@ -3,7 +3,7 @@
     <a ng-href="#/home">Fh</a>
   </div>
   <a ng-href="#/explore" class="item">Find</a>
-  <a ng-href="#/create" class="item">Create</a>
+  <a ng-show="loggedIn == true;" ng-href="#/create" class="item">Create</a>
   <div class="right menu">
   	<div ng-show="loggedIn == false;" class="item">
   		<a href="#/signup" class="small ui button">Sign Up</a>
@@ -92,7 +92,7 @@
 				<div class="ui segment resultElements">
 					<div ng-repeat="element in elements" class="ui stackable two column grid element">
 						<div ng-click="setPeekElement(element)" class="column elementName">
-							{{element}}
+							{{element.name}}
 						</div>
 						<div class="column dayContainer">
 							<div ng-click="addToWorkout(element,'Sunday')" class="selectionDay">S</div>
@@ -158,11 +158,11 @@
   </div>
   <div class="image content">
     <div class="ui medium image">
-      <img src="assets/liftingPlaceholder.jpg">
+      <img ng-src="{{activeSource}}">
     </div>
     <div class="description">
       <div class="ui header">{{activeElement.name}}</div>
-      <p>A placeholder for the description of the element.</p>
+      <p>{{activeDescription}}</p>
       <div class="ui labeled input">
         <div class="ui label">
           Sets
@@ -201,11 +201,11 @@
   </div>
   <div class="image content">
     <div class="ui medium image">
-      <img src="assets/liftingPlaceholder.jpg">
+      <img ng-src="{{peekSource}}">
     </div>
     <div class="description">
       <div class="ui header">{{peekElement}}</div>
-      <p>A placeholder for the description of the element.</p>
+      <p>{{peekDescription}}</p>
     </div>
   </div>
 </div>

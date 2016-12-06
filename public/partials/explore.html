@@ -46,12 +46,12 @@
 				<div ng-repeat="workout in workouts | filter: filterQuery | orderBy:sortParameter:1" class="column">
 					<div class="ui segments workoutCard">
 						<div class="ui segment cardHeader">
-							{{workout.name}} - <span class="resultUser">{{workout.current_user}}</span>
+							<a ng-href="#/workout/{{workout._id}}">{{workout.name}} - </a><a ng=href="#/profile/{{workout.current_user_id}}"><span class="resultUser">{{workout.current_user}}</span></a>
 							<div class="headerInfo">
-								<i class="star icon"></i> {{workout.favCount}}
+								<i class="star icon"></i> {{workout.num_favorite}}
 							</div>
 							<div class="headerInfo">
-								<i class="copy icon"></i> {{workout.copyCount}}
+								<i class="copy icon"></i> {{workout.num_copy}}
 							</div>
 						</div>
 						<div class="ui segment cardBody">
