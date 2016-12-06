@@ -86,11 +86,11 @@
 			<div class="ui segments elementSearch">
 				<div class="ui segment searchElements">
 					<div class="ui transparent input">
-					  <input type="text" placeholder="Search...">
+					  <input ng-model="query" type="text" placeholder="Search...">
 					</div>
 				</div>
 				<div class="ui segment resultElements">
-					<div ng-repeat="element in elements" class="ui stackable two column grid element">
+					<div ng-repeat="element in elements | filter: filterQuery" class="ui stackable two column grid element">
 						<div ng-click="setPeekElement(element)" class="column elementName">
 							{{element.name}}
 						</div>

@@ -178,6 +178,18 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 		;
 	}
 
+	$scope.filterQuery = function(element){
+		if($scope.query == "" || $scope.query == undefined){
+			return true;
+		}
+		if(element.name.toLowerCase().includes($scope.query.toLowerCase())){
+			return true;
+		}
+		if(element.keywords.indexOf($scope.query.toLowerCase()) != -1){
+			return true;
+		}
+	};
+
 	$scope.toggleTag = function(tag){
 		var tagIndex = $scope.workout.tags.indexOf(tag);
 		if ( tagIndex == -1){
@@ -219,7 +231,7 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 }]);
 
 
-fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window', '$location', '$routeParams', 'Workouts', 'Fit', 'Authentication', 'Users', function($scope, $http, $window, $location, $routeParams, Workouts, Fit, Authentication, Users) {
+fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window', '$location', '$routeParams', 'Workouts', 'Fit', 'Authentication', 'Users', 'Elements', function($scope, $http, $window, $location, $routeParams, Workouts, Fit, Authentication, Users, Elements) {
 	$scope.workoutID = $routeParams.id;
 	Workouts.getOne($scope.workoutID).success(function(data){
 		console.log(data);
@@ -236,14 +248,13 @@ fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window'
 		$location.path('/home');
 	}
 
-	$scope.elements = ['Bench Press', 'Biking', 'Dumbbell Flies', 
-						'Leg Extensions', 'Tennis', 'Basketball', 'Bicep Curls', 'Maltese Flies'];
+	Elements.get().success(function(data){
+		console.log(data);
+		$scope.elements = data;
+	})
 
-	$scope.tags = ['lifting', 'Cardio', 'Sports', 'chest', 'Legs', 'Back', 'Arms', 'Endurance', 
-	'Strength', 'Outdoors', 'Indoors', 'Bodyweight'];
-
-	
-	
+	$scope.tags = ['lifting', 'cardio', 'sports', 'chest', 'legs', 'back', 'arms', 'endurance', 
+	'strength', 'outdoors', 'indoors', 'bodyweight'];
 
 	$scope.addToWorkout = function(element, targetDay){
 		elementToAdd = {};
@@ -280,17 +291,37 @@ fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window'
 
 	$scope.setActiveElement = function(element){
 		$scope.activeElement = element;
+		console.log($scope.activeElement);
+		Elements.getOne($scope.activeElement.elementid).success(function(data){
+			console.log(data);
+			$scope.activeSource = data[0].media;
+			$scope.activeDescription = data[0].description;
+		})
 		$('#addedElementModal')
 		  .modal('show')
 		;
 	}
 
 	$scope.setPeekElement = function(element){
-		$scope.peekElement = element;
+		$scope.peekElement = element.name;
+		$scope.peekSource = element.media;
+		$scope.peekDescription = element.description;
 		$('#elementModal')
 		  .modal('show')
 		;
 	}
+
+	$scope.filterQuery = function(element){
+		if($scope.query == "" || $scope.query == undefined){
+			return true;
+		}
+		if(element.name.toLowerCase().includes($scope.query.toLowerCase())){
+			return true;
+		}
+		if(element.keywords.indexOf($scope.query.toLowerCase()) != -1){
+			return true;
+		}
+	};
 
 	$scope.toggleTag = function(tag){
 		var tagIndex = $scope.workout.tags.indexOf(tag);

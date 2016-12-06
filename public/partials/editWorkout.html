@@ -86,13 +86,13 @@
 			<div class="ui segments elementSearch">
 				<div class="ui segment searchElements">
 					<div class="ui transparent input">
-					  <input type="text" placeholder="Search...">
+					  <input ng-model="query" type="text" placeholder="Search...">
 					</div>
 				</div>
 				<div class="ui segment resultElements">
-					<div ng-repeat="element in elements" class="ui stackable two column grid element">
+					<div ng-repeat="element in elements | filter: filterQuery" class="ui stackable two column grid element">
 						<div ng-click="setPeekElement(element)" class="column elementName">
-							{{element}}
+							{{element.name}}
 						</div>
 						<div class="column dayContainer">
 							<div ng-click="addToWorkout(element,'Sunday')" class="selectionDay">S</div>
@@ -157,15 +157,15 @@
 <div id="addedElementModal" class="ui modal">
   <i class="close icon"></i>
   <div class="header">
-  	{{activeElement.element}}
+  	{{activeElement.name}}
   </div>
   <div class="image content">
     <div class="ui medium image">
-      <img src="assets/liftingPlaceholder.jpg">
+      <img ng-src="{{activeSource}}">
     </div>
     <div class="description">
-      <div class="ui header">{{activeElement.element}}</div>
-      <p>A placeholder for the description of the element.</p>
+      <div class="ui header">{{activeElement.name}}</div>
+      <p>{{activeDescription}}</p>
       <div class="ui labeled input">
         <div class="ui label">
           Sets
@@ -200,15 +200,15 @@
 <div id="elementModal" class="ui modal">
   <i class="close icon"></i>
   <div class="header">
-  	{{peekElement}}
+  	{{peekElement.name}}
   </div>
   <div class="image content">
     <div class="ui medium image">
-      <img src="assets/liftingPlaceholder.jpg">
+      <img ng-src="{{peekSource}}">
     </div>
     <div class="description">
-      <div class="ui header">{{peekElement}}</div>
-      <p>A placeholder for the description of the element.</p>
+      <div class="ui header">{{peekElement.name}}</div>
+      <p>{{peekDescription}}</p>
     </div>
   </div>
 </div>
