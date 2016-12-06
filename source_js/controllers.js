@@ -4,6 +4,8 @@ fithubControllers.controller('homeControl', ['$scope', '$window', '$location', '
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
+	$scope.userID = Authentication.getUserID();
+
 	$scope.logout = function(){
 		Authentication.userLogout();
 		$location.path('/home');
@@ -15,6 +17,8 @@ fithubControllers.controller('signUpControl', ['$scope', '$window', '$location',
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
+	$scope.userID = Authentication.getUserID();
+
 	$scope.logout = function(){
 		Authentication.userLogout();
 		$location.path('/home');
@@ -217,7 +221,6 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
 	$scope.userID = Authentication.getUserID();
-	console.log($scope.userID);
 
 	$scope.logout = function(){
 		Authentication.userLogout();
@@ -321,7 +324,7 @@ fithubControllers.controller('userProfileControl', ['$scope', '$window', '$locat
 		Workouts.customGet('where={"current_user_id":"' + $routeParams.id + '"}').success(function(data){
 			console.log('get workouts');
 			console.log(data);
-			$scope.workouts = data.data;
+			$scope.workouts = data;
 		});
 	}else {
 		Workouts.customGet('where={"current_user_id":"' + $routeParams.id + '", "public":true}').success(function(data){
@@ -351,6 +354,8 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 	//Setup for navbar
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
+	$scope.userID = Authentication.getUserID();
+
 	$scope.logout = function(){
 		Authentication.userLogout();
 		$location.path('/home');
