@@ -1,6 +1,6 @@
 var fitServices=angular.module("fitServices",[]);
 // TODO Change this
-var baseURL = "http://fa16-cs498rk-059.cs.illinois.edu:3000/api";
+var baseURL = "http://localhost:3000/api";
 
 fitServices.factory("Fit",function($http,$window,$location){
   return{
@@ -106,5 +106,32 @@ fitServices.factory("Workouts", function($http){
 		customGet: function(parameters){
 			return $http.get(baseURL + "/workout?" + parameters);
 		}
+	}
+});
+
+fitServices.factory("Authentication", function($http){
+	var loggedIn = false;
+	var loggedUserName = "";
+	var loggedUserID = "";
+	return{
+		isLoggedIn: function(){
+			return loggedIn;
+		},
+		userLogin: function(name, id){
+			loggedIn = true;
+			loggedUserName = name;
+			loggedUserID = id;
+		},
+		userLogout: function(){
+			loggedIn = false;
+			loggedUserName = "";
+			loggedUserID = "";
+		},
+		getUserName: function(){
+			return loggedUserName;
+		},
+		getUserID: function(){
+			return loggedUserID;
+		},
 	}
 });

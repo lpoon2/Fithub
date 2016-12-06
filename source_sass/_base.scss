@@ -15,6 +15,10 @@ body{
 	font-size: 48px;
 	color: white;
 	font-weight: 700;
+
+	a{
+		color: white;
+	}
 }
 
 .menu{
@@ -23,7 +27,9 @@ body{
 	border-style: none !important;
 	.item{
 		color: $primary-green !important;
-
+		i{
+			color: $primary-green;
+		}
 		.button{
 			background-color: $secondary-green;
 			color: white;
@@ -425,6 +431,10 @@ body{
 
 
 // Login Page
+
+.loginPage{
+	margin-top: $big-margin !important;
+}
 
 .loginBox{
 	margin-bottom: $giant-margin !important;

@@ -49,12 +49,12 @@ work.find({current_user: req.user.name},function(err, obj){
 router.post('/workout',function(req,res){
   var returnObject = {};
   var ele = new work();
-
+  console.log(req.body);
   //Entire new workout object
   ele.name = req.body.name;
   ele.description = req.body.description;
   ele.original_user = req.body.original_user;//!!!!!!!!!!!!!!!!!!!!!*original user need to be changed to null if created or previous user
-  ele.original_user_id = req.body.original_user_id;
+  //ele.original_user_id = req.body.original_user_id;
   ele.current_user = req.body.current_user;//current user need to be changed in front end
   ele.current_user_id = req.body.current_user_id;
   ele.original_workout_id = req.body.original_workout_id;//!!!!!!!!!!!!!!!!!!!!!*taken care in front end
@@ -68,7 +68,7 @@ router.post('/workout',function(req,res){
   
   ele.save(function(err){
     if(err){
-      res.status(500);
+      console.log(err.message);
       returnObject.message = err.message;
       returnObject.data = {};
       res.status(500);

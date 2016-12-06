@@ -1,38 +1,23 @@
 var fithubControllers = angular.module('fithubControllers', []);
 
-fithubControllers.controller('homeControl', ['$scope','$window','Fit', function($scope,$window,Fit) {
+fithubControllers.controller('homeControl', ['$scope', '$window', '$location', 'Fit', 'Users', 'Authentication',function($scope,$window,$location, Fit, Users, Authentication) {
 	//Setup for navbar
-	
-	$scope.loggedIn = Boolean($window.sessionStorage.isLogedin);
-	$scope.userID = $window.sessionStorage.user_id;
-	$scope.userName = $window.sessionStorage.user_name;
-	console.log('Scope' + $scope.loggedIn);
-	console.log($scope.userName);
+	$scope.loggedIn = Authentication.isLoggedIn();
+	$scope.userName = Authentication.getUserName();
 	$scope.logout = function(){
-		Fit.logout();
-	}
-	$scope.checkLoggedIn = function(){
-		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
-		if ($window.sessionStorage.isLogedin == true)
-			return true
-		return false;
+		Authentication.userLogout();
+		$location.path('/home');
 	}
 
 }]);
 
-fithubControllers.controller('signUpControl', ['$scope', '$window', '$location', 'Fit', 'Users',function($scope,$window,$location, Fit, Users) {
+fithubControllers.controller('signUpControl', ['$scope', '$window', '$location', 'Fit', 'Users', 'Authentication', function($scope,$window,$location, Fit, Users, Authentication) {
 	//Setup for navbar
-	$scope.loggedIn = $window.sessionStorage.isLogedin;
-	$scope.userID = $window.sessionStorage.user_id;
-	$scope.userName = $window.sessionStorage.user_name;
+	$scope.loggedIn = Authentication.isLoggedIn();
+	$scope.userName = Authentication.getUserName();
 	$scope.logout = function(){
-		Fit.logout();
-	}
-	$scope.checkLoggedIn = function(){
-		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
-		if ($window.sessionStorage.isLogedin == true)
-			return true
-		return false;
+		Authentication.userLogout();
+		$location.path('/home');
 	}
 
 	$scope.signUpObject = {};
@@ -42,28 +27,23 @@ fithubControllers.controller('signUpControl', ['$scope', '$window', '$location',
         console.log(data);
 		var param = 'where={"email":"' + $scope.signUpObject.email + '"}';
 		Users.customGet(param).success(function(data){
-			$window.sessionStorage.isLogedin = true;
-			$window.sessionStorage.user_id = data.data[0]._id;
-			$window.sessionStorage.user_name = data.data[0].name;
+			console.log(data);
+			Authentication.userLogin(data.data[0].name, data.data[0].id);
 			$location.path('/explore');
 		});
 	  });
    }
 }]);
 
-fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', function($scope, $http, $window, $location,Workouts, Fit) {
+fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', 'Authentication', 'Users', function($scope, $http, $window, $location,Workouts, Fit, Authentication, Users) {
 	//Setup for navbar
-	$scope.loggedIn = $window.sessionStorage.isLogedin;
-	$scope.userID = $window.sessionStorage.user_id;
-	$scope.userName = $window.sessionStorage.user_name;
+	$scope.loggedIn = Authentication.isLoggedIn();
+	$scope.userName = Authentication.getUserName();
+	$scope.userID = Authentication.getUserID();
+
 	$scope.logout = function(){
-		Fit.logout();
-	}
-	$scope.checkLoggedIn = function(){
-		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
-		if ($window.sessionStorage.isLogedin == true)
-			return true
-		return false;
+		Authentication.userLogout();
+		$location.path('/home');
 	}
 
 	$scope.elements = ['Bench Press', 'Biking', 'Dumbbell Flies', 
@@ -79,21 +59,18 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 		current_user: 'OnlychestDay',
 		rating: 32,
 		copies: 12,
+	$scope.workout = {
+		name: '',
+		description: '',
+		num_favorite: 0,
+		num_copy: 0,
+		original_user: '',
+		original_workout_id : '',
+		current_user: '',
+		current_user_id: '',
+		public: false,
+		comments: [],
 		tags: [],
-		comments: [
-			{
-				user: 'John Smith',
-				body: 'This is a great workout! I will be starting it ASAP.'
-			},
-			{
-				user: 'Harry Potter',
-				body: 'Really good workout. I suggest possibly swapping biking for a second day of swimming on Thursday as it is more involved for the chest.'
-			},
-			{
-				user: 'Thomas Brethauer',
-				body: 'Looks like a great workout, but everyone knows only leg day counts!'
-			},
-		],
 		days : [
 			{
 				day: 'Sunday',
@@ -141,9 +118,14 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 		]
 	};*/
 
+	$scope.workout.original_user = $scope.userName;
+	$scope.workout.original_workout_id = '';
+	$scope.workout.current_user = $scope.userName;
+	$scope.workout.current_user_id = $scope.userID;
+
 	$scope.addToWorkout = function(element, targetDay){
 		elementToAdd = {};
-		elementToAdd.element = element;
+		elementToAdd.name = element;
 		elementToAdd.sets = '';
 		elementToAdd.reps = '';
 		elementToAdd.time = '';
@@ -214,10 +196,11 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 
 	$scope.submit = function(){
 		Workouts.add($scope.workout).success(function(data){
-			var userid = $window.sessionStorage.user_id;
-			Users.getOne(userid).success(function(user){
+			console.log(data);
+			Users.getOne($scope.userID).success(function(user){
+				console.log(user);
 				user.data.workouts.push(data.data._id);
-				Users.put(userid, user.data).success(function(){
+				Users.put($scope.userID, user.data).success(function(){
 					console.log('workout created');
 				});
 			});
@@ -227,22 +210,17 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 
 }]);
 
-fithubControllers.controller('workoutControl', ['$scope', '$window', '$location',"Workouts", 'Fit', function($scope, $window, $location,Workouts, Fit) {
-	$scope.workoutid = $routeParams.id;
+fithubControllers.controller('workoutControl', ['$scope', '$window', '$location',"Workouts", 'Fit','Authentication', function($scope, $window, $location,Workouts, Fit, Authentication) {
+	//$scope.workoutid = $routeParams.id;
 
 	//Setup for navbar
-	$scope.loggedIn = $window.sessionStorage.isLogedin;
-	$scope.userID = $window.sessionStorage.user_id;
-	$scope.userName = $window.sessionStorage.user_name;
+	$scope.loggedIn = Authentication.isLoggedIn();
+	$scope.userName = Authentication.getUserName();
 	$scope.logout = function(){
-		Fit.logout();
+		Authentication.userLogout();
+		$location.path('/home');
 	}
-	$scope.checkLoggedIn = function(){
-		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
-		if ($window.sessionStorage.isLogedin == true)
-			return true
-		return false;
-	}
+
 	Workouts.getOne($scope.workoutid).success(function(data){
 		console.log('get the workout');
 		$scope.workout = data.data;
@@ -481,21 +459,16 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 	}
 }]);
 
-fithubControllers.controller('userProfileControl','Fit', ['$scope', '$window', '$location',function($scope,$window, $location,Fit) {
+fithubControllers.controller('userProfileControl', ['$scope', '$window', '$location', 'Fit', 'Authentication', function($scope,$window, $location,Fit,Authentication) {
 	//Setup for navbar
-	$scope.loggedIn = $window.sessionStorage.isLogedin;
-	$scope.userID = $window.sessionStorage.user_id;
-	$scope.userName = $window.sessionStorage.user_name;
-	$scope.currentUser = $routeParams.id;
+	$scope.loggedIn = Authentication.isLoggedIn();
+	$scope.userName = Authentication.getUserName();
+	$scope.userID = Authentication.getUserID();
 	$scope.logout = function(){
-		Fit.logout();
+		Authentication.userLogout();
+		$location.path('/home');
 	}
-	$scope.checkLoggedIn = function(){
-		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
-		if ($window.sessionStorage.isLogedin == true)
-			return true
-		return false;
-	}
+
 	$('.menu .item')
 	  .tab()
 	;
@@ -556,19 +529,13 @@ fithubControllers.controller('userProfileControl','Fit', ['$scope', '$window', '
 
 }]);
 
-fithubControllers.controller('exploreControl', ['$scope','$location','$window','Fit', function($scope,$location, $window, Fit) {
+fithubControllers.controller('exploreControl', ['$scope','$location','$window','Fit','Authentication','Workouts', function($scope,$location, $window, Fit, Authentication, Workouts) {
 	//Setup for navbar
-	$scope.loggedIn = $window.sessionStorage.isLogedin;
-	$scope.userID = $window.sessionStorage.user_id;
-	$scope.userName = $window.sessionStorage.user_name;
+	$scope.loggedIn = Authentication.isLoggedIn();
+	$scope.userName = Authentication.getUserName();
 	$scope.logout = function(){
-		Fit.logout();
-	}
-	$scope.checkLoggedIn = function(){
-		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
-		if ($window.sessionStorage.isLogedin == true)
-			return true
-		return false;
+		Authentication.userLogout();
+		$location.path('/home');
 	}
 
 	$scope.sortParameter = 'favCount';
@@ -640,21 +607,13 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 
 }]);
 
-fithubControllers.controller('loginControl', ['$scope', '$window','$location','Fit', 'Users',function($scope,$window, $location, Fit,Users) {
+fithubControllers.controller('loginControl', ['$scope', '$window','$location','Fit', 'Users', 'Authentication', function($scope,$window, $location, Fit, Users, Authentication) {
 	//Setup for navbar
-	$scope.loggedIn = $window.sessionStorage.isLogedin;
-	$scope.userID = $window.sessionStorage.user_id;
-	$scope.userName = $window.sessionStorage.user_name;
 	$scope.logout = function(){
-		Fit.logout();
+		Authentication.userLogout();
+		$location.path('/home');
 	}
-	$scope.checkLoggedIn = function(){
-		console.log("the value of isLoged in is " + String($window.sessionStorage.isLogedin));
-		if ($window.sessionStorage.isLogedin == true)
-			return true
-		return false;
-	}
-
+	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.loginObject = {};
 
 	$scope.login = function(){
@@ -665,11 +624,13 @@ fithubControllers.controller('loginControl', ['$scope', '$window','$location','F
 				var param = 'where={"email":"' + $scope.loginObject.email + '"}';
 				Users.customGet(param).success(function(data){
 					console.log(data);
-					$window.sessionStorage.isLogedin = "true";
-					$window.sessionStorage.user_id = data.data[0]._id;
-					$window.sessionStorage.user_name = data.data[0].name;
+					Authentication.userLogin(data.data[0].name, data.data[0].id);
 					$location.path('/explore');
 				});
 			});
 	}
+}]);
+
+fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window', '$location','Workouts', 'Fit', 'Authentication', 'Users', function($scope, $http, $window, $location,Workouts, Fit, Authentication, Users) {
+
 }]);

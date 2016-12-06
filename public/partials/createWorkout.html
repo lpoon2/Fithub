@@ -1,3 +1,24 @@
+<div class="ui top fixed menu">
+  <div class="branding">
+    <a ng-href="#/home">Fh</a>
+  </div>
+  <a ng-href="#/explore" class="item">Find</a>
+  <a ng-href="#/create" class="item">Create</a>
+  <div class="right menu">
+  	<div ng-show="loggedIn == false;" class="item">
+  		<a href="#/signup" class="small ui button">Sign Up</a>
+  	</div>
+  	<div ng-show="loggedIn == false;" class="item">
+  		<a href="#/login" class="small ui button">Login</a>
+  	</div>
+  	<div ng-show="loggedIn == true;" class="item">
+  		<a href="#/profile/123"><i class="user icon"></i> {{userName}}</a>
+  	</div>
+  	<div ng-show="loggedIn == true;" class="item">
+  		<button ng-click="logout()" class="small ui button">Logout</button>
+  	</div>
+  </div>
+</div>
 <div class="createWorkoutBanner">
 	<div id="headerText">
 		<h2>NEW WORKOUT</h2>
@@ -98,7 +119,7 @@
 						</div>
 					</div>
 					<div ng-repeat="element in day.elements" class="workoutElement">
-						{{element.element}}
+						{{element.name}}
 						<div class="controls">
 							<div ng-click="removeFromWorkout(element.index, day.day)" class="deleteElement">
 								<i class="trash outline icon"></i>
@@ -123,19 +144,24 @@
 			<div ng-repeat="tag in tags" ng-click="toggleTag(tag)" ng-class="{'ui button tagButton activeTag' : workout.tags.indexOf(tag) != -1, 'ui button tagButton': workout.tags.indexOf(tag) == -1}" class="ui button tagButton">{{tag}}</div>
 		</div>
 	</div>
+	<div class="ui centered fifteen wide column">
+		<button ng-click="submit()" class="ui button">
+			Create!
+		</button>
+	</div>
 </div>
 
 <div id="addedElementModal" class="ui modal">
   <i class="close icon"></i>
   <div class="header">
-  	{{activeElement.element}}
+  	{{activeElement.name}}
   </div>
   <div class="image content">
     <div class="ui medium image">
       <img src="assets/liftingPlaceholder.jpg">
     </div>
     <div class="description">
-      <div class="ui header">{{activeElement.element}}</div>
+      <div class="ui header">{{activeElement.name}}</div>
       <p>A placeholder for the description of the element.</p>
       <div class="ui labeled input">
         <div class="ui label">

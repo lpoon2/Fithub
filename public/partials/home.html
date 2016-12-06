@@ -1,20 +1,20 @@
 <div class="ui top fixed menu">
   <div class="branding">
-    Fh
+    <a ng-href="#/home">Fh</a>
   </div>
-  <a class="item">Find</a>
-  <a class="item">Create</a>
+  <a ng-href="#/explore" class="item">Find</a>
+  <a ng-href="#/create" class="item">Create</a>
   <div class="right menu">
-  	<div ng-show="!checkLoggedIn()" class="item">
-  		<a href="#" class="small ui button">Sign Up</a>
+  	<div ng-show="loggedIn == false;" class="item">
+  		<a href="#/signup" class="small ui button">Sign Up</a>
   	</div>
-  	<div ng-show="!checkLoggedIn()" class="item">
-  		<a href="#" class="small ui button">Login</a>
+  	<div ng-show="loggedIn == false;" class="item">
+  		<a href="#/login" class="small ui button">Login</a>
   	</div>
-  	<div ng-show="checkLoggedIn()" class="item">
-  		<i class="user icon"></i> {{userName}}
+  	<div ng-show="loggedIn == true;" class="item">
+  		<a href="#/profile/123"><i class="user icon"></i> {{userName}}</a>
   	</div>
-  	<div ng-show="checkLoggedIn()" class="item">
+  	<div ng-show="loggedIn == true;" class="item">
   		<button ng-click="logout()" class="small ui button">Logout</button>
   	</div>
   </div>
