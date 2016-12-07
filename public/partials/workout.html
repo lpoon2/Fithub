@@ -27,20 +27,17 @@
 		</div>
 		<p class="workoutCreator">Created by {{workout.current_user}}</p>
 	</div>
-	<div class="four wide column">
-	</div>
-	<div class="three wide column">
-		<div class="ui label">
-		  <i class="star icon"></i>
-		  {{workout.num_favorite}}
-		  <a ng-click="favorite()" ng-show="favorited == false" class="detail">Favorite</a>
-		</div>
-	</div>
-	<div class="three wide column">
-		<div class="ui label">
+
+	<div class="seven wide right floated center aligned column workoutMetrics">
+		<div class="ui big label">
 		  <i class="copy icon"></i>
 		  {{workout.num_copy}}
 		  <a ng-click="copy()" ng-show="loggedIn" class="detail">Copy</a>
+		</div>
+		<div class="ui big label">
+		  <i class="star icon"></i>
+		  {{workout.num_favorite}}
+		  <a ng-click="favorite()" ng-show="favorited == false" class="detail">Favorite</a>
 		</div>
 	</div>
 </div>
@@ -106,7 +103,7 @@
 <div class="ui grid commentSection">
 	<div class="row">
 		<div class="one wide column"></div>
-		<div class="twelve wide column inputField">
+		<div class="eleven wide column inputField">
 			<div class="ui form">
 				<div class="field">
 				    <textarea ng-show="userID != '' " ng-model="commentBody" rows="2" placeholder="Write a new comment!"></textarea>
@@ -114,7 +111,7 @@
 			</div>
 		</div>
 		<div class="three wide column">
-			<button ng-show="userID != '' " ng-click="comment()" class="ui fluid button">Comment</button>
+			<button ng-show="userID != '' " ng-click="comment()" class="ui fluid button commentButton">Comment</button>
 		</div>
 	</div>
 	<div ng-repeat="comment in workout.comments" class="row">

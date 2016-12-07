@@ -130,7 +130,7 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 	$scope.workout.current_user_id = $scope.userID;
 
 	$scope.addToWorkout = function(element, targetDay){
-		elementToAdd = {};
+		var elementToAdd = {};
 		elementToAdd.name = element.name;
 		elementToAdd.elementid = element._id;
 		elementToAdd.sets = '';
@@ -215,6 +215,12 @@ fithubControllers.controller('createWorkoutControl', ['$scope', '$http', '$windo
 		}
 	}
 
+	$scope.saveModal = function(){
+		$('#addedElementModal')
+		  .modal('hide')
+		;
+	}
+
 	$.extend($.scrollTo.defaults, {
 	  axis: 'y',
 	  duration: 800,
@@ -264,7 +270,7 @@ fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window'
 	'strength', 'outdoors', 'indoors', 'bodyweight'];
 
 	$scope.addToWorkout = function(element, targetDay){
-		elementToAdd = {};
+		var elementToAdd = {};
 		elementToAdd.name = element.name;
 		elementToAdd.elementid = element._id;
 		elementToAdd.sets = '';
@@ -304,10 +310,10 @@ fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window'
 			console.log(data);
 			$scope.activeSource = data[0].media;
 			$scope.activeDescription = data[0].description;
+			$('#addedElementModal')
+			  .modal('show')
+			;
 		})
-		$('#addedElementModal')
-		  .modal('show')
-		;
 	}
 
 	$scope.setPeekElement = function(element){
@@ -339,6 +345,12 @@ fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window'
 			$scope.workout.tags.splice(tagIndex,1);
 		}
 		console.log($scope.workout.tags);
+	}
+
+	$scope.saveModal = function(){
+		$('#addedElementModal')
+		  .modal('hide')
+		;
 	}
 
 	$scope.getTagClass = function(tag){

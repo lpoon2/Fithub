@@ -81,11 +81,14 @@
 	<div id="step4" class="ui centered fourteen wide column step">
 		<div class="description">
 			<strong>Step 4 - </strong> Find and add elements to your workout!
+			<div class="subText">
+				Click on a day to add it to the workout. You can also click on elements to see details. 
+			</div>
 		</div>
 		<div class="stepInput">
 			<div class="ui segments elementSearch">
 				<div class="ui segment searchElements">
-					<div class="ui transparent input">
+					<div class="ui transparent fluid input">
 					  <input ng-model="query" type="text" placeholder="Search...">
 					</div>
 				</div>
@@ -144,8 +147,8 @@
 			<div ng-repeat="tag in tags" ng-click="toggleTag(tag)" ng-class="{'ui button tagButton activeTag' : workout.tags.indexOf(tag) != -1, 'ui button tagButton': workout.tags.indexOf(tag) == -1}" class="ui button tagButton">{{tag}}</div>
 		</div>
 	</div>
-	<div class="ui centered fifteen wide column">
-		<button ng-click="submit()" class="ui button">
+	<div class="ui centered fifteen wide center aligned column">
+		<button ng-click="submit()" class="ui button commandButton">
 			Create!
 		</button>
 	</div>
@@ -156,41 +159,61 @@
   <div class="header">
   	{{activeElement.name}}
   </div>
-  <div class="image content">
-    <div class="ui medium image">
-      <img ng-src="{{activeSource}}">
-    </div>
-    <div class="description">
-      <div class="ui header">{{activeElement.name}}</div>
-      <p>{{activeDescription}}</p>
-      <div class="ui labeled input">
-        <div class="ui label">
-          Sets
-        </div>
-        <input type="text" ng-model="activeElement.sets">
-      </div>
-      <br>
-      <div class="ui labeled input">
-        <div class="ui label">
-          Reps
-        </div>
-        <input type="text" ng-model="activeElement.reps">
-      </div>
-      <br>
-      <div class="ui labeled input">
-        <div class="ui label">
-          Time
-        </div>
-        <input type="text" ng-model="activeElement.time">
-      </div>
-      <br>
-      <div class="ui labeled input">
-        <div class="ui label">
-          Distance
-        </div>
-        <input type="text" ng-model="activeElement.distance">
-      </div>
-    </div>
+  <div id="modalGrid" class="ui two column center aligned stackable grid">
+  	<div class="column">
+  		<div class="image content">
+  		  <div class="ui centered medium image">
+  		    <img ng-src="{{activeSource}}">
+  		  </div>
+  		</div>
+  	</div>
+  	<div class="column">
+  		  <div class="description">
+  		    <div class="ui one column left aligned stackable grid">
+  		    	<div class="ui column">
+  		    		<div class="ui header">{{activeElement.name}}</div>
+  		    	</div>
+  		    	<div class="ui column">
+  		    		<p>{{activeDescription}}</p>
+  		    	</div>
+  		    	<div class="ui column">
+  		    		<div class="ui labeled fluid input">
+  		    		  <div class="ui label">
+  		    		    Sets
+  		    		  </div>
+  		    		  <input type="text" ng-model="activeElement.sets">
+  		    		</div>
+  		    		<br>
+  		    		<div class="ui labeled fluid input">
+  		    		  <div class="ui label">
+  		    		    Reps
+  		    		  </div>
+  		    		  <input type="text" ng-model="activeElement.reps">
+  		    		</div>
+  		    	</div>
+  		    	<div class="ui column">
+  				  <div class="ui labeled fluid input">
+  				    <div class="ui label">
+  				      Time
+  				    </div>
+  				    <input type="text" ng-model="activeElement.time">
+  				  </div>
+  				  <br>
+  				  <div class="ui labeled fluid input">
+  				    <div class="ui label">
+  				      Distance
+  				    </div>
+  				    <input type="text" ng-model="activeElement.distance">
+  				  </div>
+  				</div>
+  				<div class="ui column">
+  					<button ng-click="saveModal()" class="ui black button">
+  						Save
+  					</button>
+  				</div>
+  		    	</div>
+  		    </div>
+  	</div>
   </div>
 </div>
 
