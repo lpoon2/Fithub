@@ -119,8 +119,13 @@ body{
 		font-size: 30px;
 		font-weight: 400;
 		padding-left: $small-margin;
+
+		i{
+			color: $primary-green;
+		}
 	}
 
+	
 	.workoutCreator{
 		margin-top: $small-margin;
 		color: grey;
@@ -350,6 +355,7 @@ body{
 
 .profileContainer{
 	margin-top: $big-margin !important;
+	margin-bottom: 240px !important;
 	.userName{
 		font-size: 36px;
 		font-weight: 700;
@@ -362,7 +368,10 @@ body{
 .workoutCard{
 
 	.cardHeader{
-		color: $primary-green;
+		a{
+			color: $primary-green;
+		}
+		color: white;
 		background-color: $third-green;
 		font-size: 14px !important;
 		font-weight: 400;
@@ -434,22 +443,27 @@ body{
 .error{
 	text-align: center;
 	font-weight: 700;
-	font-size: 36px;
-	background-color: $red;
+	font-size: 18px;
+	opacity: .95;
 }
 
 .loginPage{
 	margin-top: $big-margin !important;
+	padding-bottom: 200px !important;
+	@include fixed-background();
+	background-image : url(../assets/signupBanner.jpg);
 }
 
 .loginBox{
+	margin-top: $big-margin !important;
 	margin-bottom: $giant-margin !important;
+	opacity: 0.95;
 }
 
 .loginIntro{
 	text-align: center;
 	font-weight: 700;
-	font-size: 36px;
+	font-size: 24px;
 	color: $primary-green;
 }
 

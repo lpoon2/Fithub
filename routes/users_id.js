@@ -23,7 +23,7 @@ module.exports = function(router) {
 					});
 				}
 				else{
-					res.status(404);
+					res.status(200);
 					res.json({
 						message: "Got the user",
 						data: response

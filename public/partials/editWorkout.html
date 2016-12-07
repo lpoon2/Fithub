@@ -3,7 +3,7 @@
     <a ng-href="#/home">Fh</a>
   </div>
   <a ng-href="#/explore" class="item">Find</a>
-  <a ng-href="#/create" class="item">Create</a>
+  <a ng-show="loggedIn == true;" ng-href="#/create" class="item">Create</a>
   <div class="right menu">
   	<div ng-show="loggedIn == false;" class="item">
   		<a href="#/signup" class="small ui button">Sign Up</a>

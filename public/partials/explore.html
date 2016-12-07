@@ -3,7 +3,7 @@
     <a ng-href="#/home">Fh</a>
   </div>
   <a ng-href="#/explore" class="item">Find</a>
-  <a ng-href="#/create" class="item">Create</a>
+  <a ng-show="loggedIn == true;" ng-href="#/create" class="item">Create</a>
   <div class="right menu">
   	<div ng-show="loggedIn == false;" class="item">
   		<a href="#/signup" class="small ui button">Sign Up</a>
@@ -34,7 +34,7 @@
 		</div>
 		<div class="four wide centered column">
 			<div class="ui buttons">
-				<button ng-click="toggleSort('favCount')" ng-class="{'ui button topicButton activeSort' : sortParameter == 'favCount', 'ui button topicButton': sortParameter != 'favCount'}" class="ui button topicButton"><i class="trophy icon"></i>Popular</button>
+				<button ng-click="toggleSort('num_favorite')" ng-class="{'ui button topicButton activeSort' : sortParameter == 'num_favorite', 'ui button topicButton': sortParameter != 'num_favorite'}" class="ui button topicButton"><i class="trophy icon"></i>Popular</button>
 				<div class="or"></div>
 				<button ng-click="toggleSort('dateCreated')" ng-class="{'ui button topicButton activeSort' : sortParameter == 'dateCreated', 'ui button topicButton': sortParameter != 'dateCreate'}" class="ui button topicButton" ><i class="newspaper icon"></i>New</button>
 			</div>
@@ -46,12 +46,17 @@
 				<div ng-repeat="workout in workouts | filter: filterQuery | orderBy:sortParameter:1" class="column">
 					<div class="ui segments workoutCard">
 						<div class="ui segment cardHeader">
-							<a ng-href="#/workout/{{workout._id}}">{{workout.name}} - </a><a ng=href="#/profile/{{workout.current_user_id}}"><span class="resultUser">{{workout.current_user}}</span></a>
-							<div class="headerInfo">
-								<i class="star icon"></i> {{workout.num_favorite}}
+							<div>
+								<a ng-href="#/workout/{{workout._id}}">{{workout.name}}</a>
+								<div class="headerInfo">
+									<i class="star icon"></i> {{workout.num_favorite}}
+								</div>
 							</div>
-							<div class="headerInfo">
-								<i class="copy icon"></i> {{workout.num_copy}}
+							<div>
+								<a ng-href="#/profile/{{workout.current_user_id}}"><span class="resultUser">{{workout.current_user}}</span></a>
+								<div class="headerInfo">
+									<i class="copy icon"></i> {{workout.num_copy}}
+								</div>
 							</div>
 						</div>
 						<div class="ui segment cardBody">
@@ -60,7 +65,7 @@
 							</div>
 						</div>
 						<div class="ui segment cardFooter">
-							<div ng-repeat="tag in workout.tags" class="ui label cardTag">
+							<div ng-repeat="tag in workout.tags" class="ui tiny label cardTag">
 							  <i class="tag icon"></i> {{tag}}
 							</div>
 						</div>

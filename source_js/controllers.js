@@ -2,9 +2,11 @@ var fithubControllers = angular.module('fithubControllers', []);
 
 fithubControllers.controller('homeControl', ['$scope', '$window', '$location', 'Fit', 'Users', 'Authentication',function($scope,$window,$location, Fit, Users, Authentication) {
 	//Setup for navbar
+	
 	$scope.loggedIn = Authentication.isLoggedIn();
 	$scope.userName = Authentication.getUserName();
 	$scope.userID = Authentication.getUserID();
+	console.log($scope.loggedIn);
 
 	$scope.logout = function(){
 		Authentication.userLogout();
@@ -33,7 +35,7 @@ fithubControllers.controller('signUpControl', ['$scope', '$window', '$location',
 		Users.customGet(param).success(function(data){
 			console.log(data);
 			$scope.signUpWorked = true;
-			Authentication.userLogin(data.data[0].name, data.data[0].id);
+			Authentication.userLogin(data.data[0].name, data.data[0]._id);
 			$location.path('/explore');
 		});
 	  }).error(function(data){
@@ -543,7 +545,7 @@ fithubControllers.controller('exploreControl', ['$scope','$location','$window','
 		$location.path('/home');
 	}
 
-	$scope.sortParameter = 'favCount';
+	$scope.sortParameter = 'num_favorite';
 	Workouts.get_public().success(function(data){
 		console.log('get workouts');
 		console.log(data);

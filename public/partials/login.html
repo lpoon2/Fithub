@@ -3,7 +3,7 @@
     <a ng-href="#/home">Fh</a>
   </div>
   <a ng-href="#/explore" class="item">Find</a>
-  <a ng-href="#/create" class="item">Create</a>
+  <a ng-show="loggedIn == true;" ng-href="#/create" class="item">Create</a>
   <div class="right menu">
   	<div ng-show="loggedIn == false;" class="item">
   		<a href="#/signup" class="small ui button">Sign Up</a>
@@ -21,16 +21,19 @@
 </div>
 <div class="ui stackable grid loginPage">
 	<div class="row">
-		<div class="ui seven wide centered column">
-			<h4 class="loginIntro">
-				Welcome back! Login below to get started. 
-			</h4>
+		<div class="ui nine wide centered column">
+			<div class="ui eight wide centered column error">
+				<div data-ng-messages="loginFail" data-ng-show="LoginWorked == false" data-ng-cloak class="ui red message"><i class="red warning icon"></i> The email/password combination was invalid!</div>
+			</div>
 		</div>
-	</div>
-	<div class="row">
 		<div class="ui eight wide centered column">
 			<div class="ui segment loginBox">
 				<div class="ui stackable one column grid">
+					<div class="centered column">
+						<h4 class="loginIntro">
+							Welcome Back!
+						</h4>
+					</div>
 					<div class="centered column">
 						<div class="ui form">
 							<div class="field">
@@ -52,9 +55,6 @@
 							Login
 						</button>
 					</div>
-					<div class="error" data-ng-messages="loginFail" data-ng-show="LoginWorked == false" data-ng-cloak>
-            			<p data-ng-message="loginFail">Unable to Log in</p>
-       		 		</div>
 				</div>
 			</div>
 		</div>

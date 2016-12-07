@@ -3,7 +3,7 @@
     <a ng-href="#/home">Fh</a>
   </div>
   <a ng-href="#/explore" class="item">Find</a>
-  <a ng-href="#/create" class="item">Create</a>
+  <a ng-show="loggedIn == true;" ng-href="#/create" class="item">Create</a>
   <div class="right menu">
   	<div ng-show="loggedIn == false;" class="item">
   		<a href="#/signup" class="small ui button">Sign Up</a>
@@ -22,29 +22,25 @@
 
 <div id="workoutInfo" class="ui stackable grid">
 	<div class="six wide column">
-		<h2 class="workoutName">{{workout.name}}</h2><a href="#/edit/{{workout._id}}"><button ng-show="check_user()">Edit</button></a>
+		<div class="workoutName">
+			{{workout.name}}<a href="#/edit/{{workout._id}}"><i ng-show="check_user()" class="edit icon"></i></a>
+		</div>
 		<p class="workoutCreator">Created by {{workout.current_user}}</p>
 	</div>
 	<div class="four wide column">
 	</div>
 	<div class="three wide column">
-		<div class="ui labeled small button" tabindex="0">
-		  <div ng-click="favorite()" ng-show="favorited == false" class="ui button">
-		    <i class="star icon"></i> Fav
-		  </div>
-		  <a class="ui basic left pointing label">
-		    {{workout.num_favorite}}
-		  </a>
+		<div class="ui label">
+		  <i class="star icon"></i>
+		  {{workout.num_favorite}}
+		  <a ng-click="favorite()" ng-show="favorited == false" class="detail">Favorite</a>
 		</div>
 	</div>
 	<div class="three wide column">
-		<div class="ui labeled small button" tabindex="0">
-		  <div ng-click="copy()" class="ui button">
-		    <i class="copy icon"></i> Copy
-		  </div>
-		  <a class="ui basic left pointing label">
-		    {{workout.num_copy}}
-		  </a>
+		<div class="ui label">
+		  <i class="copy icon"></i>
+		  {{workout.num_copy}}
+		  <a ng-click="copy()" ng-show="loggedIn" class="detail">Copy</a>
 		</div>
 	</div>
 </div>

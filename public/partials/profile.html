@@ -3,7 +3,7 @@
     <a ng-href="#/home">Fh</a>
   </div>
   <a ng-href="#/explore" class="item">Find</a>
-  <a ng-href="#/create" class="item">Create</a>
+  <a ng-show="loggedIn == true;" ng-href="#/create" class="item">Create</a>
   <div class="right menu">
   	<div ng-show="loggedIn == false;" class="item">
   		<a href="#/signup" class="small ui button">Sign Up</a>
@@ -35,12 +35,16 @@
 				<div ng-repeat="workout in workouts" class="column">
 					<div class="ui segments workoutCard">
 						<div class="ui segment cardHeader">
-							<a ng-href="#/workout/{{workout._id}}">{{workout.name}}</a>
-							<div class="headerInfo">
-								<i class="star icon"></i> {{workout.favCount}}
+							<div>
+								<a ng-href="#/workout/{{workout._id}}">{{workout.name}}</a>
+								<div class="headerInfo">
+									<i class="star icon"></i> {{workout.num_favorite}}
+								</div>
 							</div>
-							<div class="headerInfo">
-								<i class="copy icon"></i> {{workout.copyCount}}
+							<div>
+								<div class="headerInfo">
+									<i class="copy icon"></i> {{workout.num_copy}}
+								</div>
 							</div>
 						</div>
 						<div class="ui segment cardBody">
@@ -49,7 +53,7 @@
 							</div>
 						</div>
 						<div class="ui segment cardFooter">
-							<div ng-repeat="tag in workout.tags" class="ui label cardTag">
+							<div ng-repeat="tag in workout.tags" class="ui tiny label cardTag">
 							  <i class="tag icon"></i> {{tag}}
 							</div>
 						</div>
@@ -62,12 +66,16 @@
 				<div ng-repeat="workout in workouts | filter:filterByOriginal" class="column">
 					<div class="ui segments workoutCard">
 						<div class="ui segment cardHeader">
-							{{workout.name}}
-							<div class="headerInfo">
-								<i class="star icon"></i> {{workout.favCount}}
+							<div>
+								<a ng-href="#/workout/{{workout._id}}">{{workout.name}}</a>
+								<div class="headerInfo">
+									<i class="star icon"></i> {{workout.num_favorite}}
+								</div>
 							</div>
-							<div class="headerInfo">
-								<i class="copy icon"></i> {{workout.copyCount}}
+							<div>
+								<div class="headerInfo">
+									<i class="copy icon"></i> {{workout.num_copy}}
+								</div>
 							</div>
 						</div>
 						<div class="ui segment cardBody">
@@ -76,7 +84,7 @@
 							</div>
 						</div>
 						<div class="ui segment cardFooter">
-							<div ng-repeat="tag in workout.tags" class="ui label cardTag">
+							<div ng-repeat="tag in workout.tags" class="ui tiny label cardTag">
 							  <i class="tag icon"></i> {{tag}}
 							</div>
 						</div>
@@ -89,12 +97,16 @@
 				<div ng-repeat="workout in workouts | filter:filterByCopied" class="column">
 					<div class="ui segments workoutCard">
 						<div class="ui segment cardHeader">
-							{{workout.name}}
-							<div class="headerInfo">
-								<i class="star icon"></i> {{workout.favCount}}
+							<div>
+								<a ng-href="#/workout/{{workout._id}}">{{workout.name}}</a>
+								<div class="headerInfo">
+									<i class="star icon"></i> {{workout.num_favorite}}
+								</div>
 							</div>
-							<div class="headerInfo">
-								<i class="copy icon"></i> {{workout.copyCount}}
+							<div>
+								<div class="headerInfo">
+									<i class="copy icon"></i> {{workout.num_copy}}
+								</div>
 							</div>
 						</div>
 						<div class="ui segment cardBody">
@@ -103,7 +115,7 @@
 							</div>
 						</div>
 						<div class="ui segment cardFooter">
-							<div ng-repeat="tag in workout.tags" class="ui label cardTag">
+							<div ng-repeat="tag in workout.tags" class="ui tiny label cardTag">
 							  <i class="tag icon"></i> {{tag}}
 							</div>
 						</div>
