@@ -265,7 +265,8 @@ fithubControllers.controller('editWorkoutControl', ['$scope', '$http', '$window'
 
 	$scope.addToWorkout = function(element, targetDay){
 		elementToAdd = {};
-		elementToAdd.name = element;
+		elementToAdd.name = element.name;
+		elementToAdd.elementid = element._id;
 		elementToAdd.sets = '';
 		elementToAdd.reps = '';
 		elementToAdd.time = '';
@@ -427,24 +428,24 @@ fithubControllers.controller('workoutControl', ['$scope', '$window', '$location'
 
     $scope.copy = function(){
     	$scope.workout.num_copy ++;
-		Workouts.update($scope.workoutid, $scope.workout);
-		var newWorkout = $scope.workout;
-		newWorkout._id = undefined;
-		newWorkout.comments = [];
-		newWorkout.dateCreated = undefined;
-		newWorkout.current_user = $scope.userName;
-		newWorkout.current_user_id = $scope.userID;
-		Workouts.add(newWorkout).success(function(data){
-			console.log(data);
-			Users.customGet('where={"_id":"'+$scope.userID+'"}').success(function(user){
-				user.data[0].workouts.push(data.data._id);
-				Users.put($scope.userID, user.data[0]).success(function (){
-					console.log('workoutCopied');
+		Workouts.update($scope.workoutid, $scope.workout).success(function(data){
+			var newWorkout = $scope.workout;
+			newWorkout._id = undefined;
+			newWorkout.comments = [];
+			newWorkout.dateCreated = undefined;
+			newWorkout.current_user = $scope.userName;
+			newWorkout.current_user_id = $scope.userID;
+			Workouts.add(newWorkout).success(function(data){
+				console.log(data);
+				Users.customGet('where={"_id":"'+$scope.userID+'"}').success(function(user){
+					user.data[0].workouts.push(data.data._id);
+					Users.put($scope.userID, user.data[0]).success(function (){
+						console.log('workoutCopied');
+					});
 				});
+				$location.path('/edit/'+ data.data._id);
 			});
-			$location.path('/edit/'+ data.data._id);
 		});
-
 	}
 
 	$scope.check_user = function(){
